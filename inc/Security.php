@@ -106,12 +106,10 @@ class Security{
 	
 	public function verifyUser ()
 	{
-		echo "Verify user";exit;
 		// cookie verification
 		$token = (isset($_SESSION['token'])) ? $_SESSION['token'] : false;
 		if (!$token)
 		{
-			echo "Create token";
 			$this->createToken();
 		}
 		
@@ -119,7 +117,6 @@ class Security{
 		
 		if ($_SESSION['expiry']-1 < time())
 		{
-			echo "expired";
 			$this->recreateSession ();
 			return;
 		}
@@ -153,7 +150,6 @@ class Security{
 	public function recreateSession ()
 	{
 		$_SESSION['loggedIn'] = false;
-		
 	}
 	
 	protected function failedVerification ()
@@ -169,6 +165,8 @@ class Security{
 		
 		$_SESSION['token'] = $token;
 		$_SESSION['expiry'] = $expiry;
+		
+		$this->recreateSession();
 	}
 }
 

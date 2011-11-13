@@ -1,8 +1,16 @@
 <?php
 
 abstract class TemplateBase {
-    public static function message($message);
-    private static function loadFile($fileName);
+    public static $module_content;
+    
+    public static function message($message)
+    {
+    	
+    }
+    private static function loadFile($fileName)
+    {
+    	
+    }
 }
 
 class TemplateHelper {

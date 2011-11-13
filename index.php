@@ -21,7 +21,8 @@ require_once(fw_dir_inc."Security.php");
 $user = $GLOBALS['fw_security']->authenticatedUser;
 $loggedIn = $_SESSION['loggedIn'];
 
-$GLOBALS['fw_langs']->loadLanguage($user->lang);
+$GLOBALS['fw_langs']->loadLanguage(($user == null) ? fw_settings_lang : $user->lang);
 
 // user-agent related
 require_once(fw_dir_inc."Browser.php");
+
