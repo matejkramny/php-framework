@@ -1,3 +1,6 @@
-README file
+The php framework.
 
+This is built for easy administering via modules. Adding modules is easy as adding an entry to the database and copying it to /modules folder.
+The module is accessed when the client hits certain url, like http://yourwebsite.me/mymodule
 
+Module tutorial will come at some point..
