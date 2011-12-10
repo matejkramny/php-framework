@@ -2,6 +2,8 @@
 
 require_once(fw_dir_inc."Security.php");
 
+// User class holds a user
+
 class User extends Security{
     private $pool;
     

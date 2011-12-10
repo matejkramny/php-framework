@@ -17,7 +17,8 @@ class Routing {
 
     // public
     // constructor
-    public function Routing() {
+    public function Routing()
+    {
         $this->route = NULL;
         $this->unparsed = (isset($_GET['path'])) ? $_GET['path'] : "";
 
@@ -26,6 +27,7 @@ class Routing {
     }
 
     public function getRoute() {
+        // Get route from url request
         if ($this->route == NULL) {
             $this->parseRoute($this->unparsed);
         }
@@ -36,6 +38,8 @@ class Routing {
     // private
 
     private function defineRoute($route=null) {
+        // Defines route constants
+        
         if ($route == null)
             $route = $this->route;
 
@@ -47,10 +51,12 @@ class Routing {
         }
     }
 
-    // parses uri to array with [lang] etc
+    // Parses URL and decides which module is to be loaded, what language the page is to be displayed in etc.
     private function parseRoute($unparsed) {
+    	// Put an unparsed URI string into an array, by the "/" delimiter
         $oExplode = explode("/", $unparsed);
-
+		
+		// Filter the array elements, and escape unsafe characters.
         foreach ($oExplode as $key => $string) {
             if (strlen($string) == 0) {
                 unset($oExplode[$key]);
@@ -59,13 +65,12 @@ class Routing {
 
             $oExplode[$key] = DB::makeSafe($string);
         }
-
+		
         $this->parsed = $oExplode;
-
         $route = &$this->route;
-
+		
+		// Decide what to do for each array element.
         foreach ($oExplode as $key => $value) {
-
             // check for language (2 char e.g. 'en')
             // language must be before anything in the uri
             if (array_key_exists($value, Langs::getLangs()) && $key == 0) {

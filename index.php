@@ -1,5 +1,6 @@
 <?php
 
+// Define URL constants
 define('fw_root', 			dirname($_SERVER['SCRIPT_FILENAME']) . '/');		// absolute server path
 define('fw_URI',		 	dirname($_SERVER['PHP_SELF']) . '/',  true);		// browser-friendly path
 
@@ -9,7 +10,9 @@ set_include_path(fw_root);
 // configuration
 require_once("config.inc.php");
 
-function _t ($key){
+// Translate function
+function _t ($key)
+{
     return $GLOBALS['fw_langs']->translate ($key);
 }
 
@@ -18,9 +21,12 @@ require_once(fw_dir_inc."User.php");
 // security
 require_once(fw_dir_inc."Security.php");
 
+// Current user object
 $user = $GLOBALS['fw_security']->authenticatedUser;
-$loggedIn = $_SESSION['loggedIn'];
+// LoggedIn GLOBALS variable, stating current-user's status
+$loggedIn = isset($_SESSION['loggedIn']) ? $_SESSION['loggedIn'] : false;
 
+// Load current language
 $GLOBALS['fw_langs']->loadLanguage(($user == null) ? fw_settings_lang : $user->lang);
 
 // user-agent related

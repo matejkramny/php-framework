@@ -34,7 +34,7 @@ $fw_db = new DB;
 $fw_db->connect();
 $fw_db->selectDb(fw_mysql_database);
 
-// general settings - more in database
+// general settings loaded from database
 define("fw_site_enabled", true);
 require_once(fw_dir_lib."settings.php");
 

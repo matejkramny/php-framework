@@ -7,21 +7,33 @@ require_once (fw_dir_lib."settings.php");
 class Security{
 	var $authenticatedUser;
 	
-	public static function hash_password($password, $salt=NULL){
+	public static function hash_password($password, $salt=NULL)
+	{
+		// Hashing algorithm for passwords
+		// Produces 256 character-long
+		
 		if($salt == NULL) $salt = self::get_salt();
 		
+		// Encrypt the $password with obtained $salt
 		$oHash = crypt($password, '$6$rounds=3249$'.$salt.'$');
 		
+		// Extract essential strings from hashed string
 		$oExplode = explode("$",$oHash, 5);
 		
 		$hash = $oExplode[4];
 		$salt = $oExplode[3];
 		
+		// Return array with Salt and Hashed password
 		return array("salt" => $salt, "hash" => $hash);
 	}
 	
-	public static function get_salt($user=NULL){
-		if($user == NULL){
+	public static function get_salt($user=NULL)
+	{
+		// Retrieves salt
+		// or generates new if user is not logged in
+		
+		if($user == NULL)
+		{
 			// generate new & assign
 			
 			$oRand = uniqid();
@@ -32,12 +44,16 @@ class Security{
 			
 			return $oSalt;
 		}
-		else{
+		else
+		{
 			return DB::getRow("profiles",array("fields" => array('salt'), 'where' => array("id" => $user)));
 		}
 	}
 	
-	public function checkBan($ip=NULL, $user=NULL){
+	public function checkBan($ip=NULL, $user=NULL)
+	{
+		// Checks if a user/ip is banned from using the system
+		
 		if($ip == NULL)
 			$ip = fw_user_ip;
 		
@@ -48,22 +64,32 @@ class Security{
 		if(!defined("fw_settings_ban"))
 			define("fw_settings_ban", "ip");
 		
-		if(fw_settings_ban == "user"){
-			if($this->check_uid($user)){
+		// Ban is set on user
+		if(fw_settings_ban == "user")
+		{
+			if($this->check_uid($user))
+			{
 				$this->displayBanned ($uid);
 			}
 		}
-		else if(fw_settings_ban == "ip"){
-			if($this->check_ip($ip)){
+		// Ban is set on IP addresses
+		else if(fw_settings_ban == "ip")
+		{
+			if($this->check_ip($ip))
+			{
 				$this->displayBanned($ip);
 			}
 		}
 	}
 	
-	public function check_ip ($ip = NULL){
+	public function check_ip ($ip = NULL)
+	{
+		// Checks IP address for Ban purposes
+		
 		if($ip == NULL)
 			$ip = fw_user_ip;
 		
+		// Retrieve records from Ban table
 		$oDb = DB::getRow("sys_bans", array("where" => array( "ip" => $ip, "AND Expires >" => time(), "__comma" => false )));
 		
 		// returns true upon ip being found and thus banned
@@ -73,9 +99,12 @@ class Security{
 		return false;
 	}
 	
-	public function check_uid ($uid = NULL){
+	public function check_uid ($uid = NULL)
+	{
+		// Checks a user ID for Ban purposes
+		
 		if($uid == NULL)
-			;//$uid = fw_user_id;
+			$uid = fw_user_id;
 		
 		$oDb = DB::getRow("sys_bans", array("where" => array( "uid" => $uid, "AND Expires >" => time(), "__comma" => false )));
 		
@@ -89,9 +118,11 @@ class Security{
 	
 	// private
 	
-	private function displayBanned($data){
+	private function displayBanned($data)
+	{
+		// Tells the user that they have been banned
+		
 		// TODO: template displays banned msg
-		//temporary
 		
 		// check if ip or user-id (ip is in string format)
 		if(is_numeric($data))
@@ -99,13 +130,17 @@ class Security{
 		else
 			$msg = "IP Address {$data} is blocked on our systems.";
 		
+		// Display plain answer
 		echo $msg;
 		
+		// Exit script
 		die();
 	}
 	
 	public function verifyUser ()
 	{
+		// Veryfies user session
+		
 		// cookie verification
 		$token = (isset($_SESSION['token'])) ? $_SESSION['token'] : false;
 		if (!$token)
@@ -130,6 +165,9 @@ class Security{
 	
 	protected function verifyLogin ()
 	{
+		// Verify login credentials
+		// Could have been deleted while user is logged in
+		
 		$oDb = DB::getRow ("profiles", array (
 			"where" => array (
 				"id" => $_SESSION['u']['id']
@@ -149,11 +187,13 @@ class Security{
 	
 	public function recreateSession ()
 	{
+		// Recreate session by logging out
 		$_SESSION['loggedIn'] = false;
 	}
 	
 	protected function failedVerification ()
 	{
+		// User has failed authentication
 		$this->authenticatedUser = null;
 	}
 	

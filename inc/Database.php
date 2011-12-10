@@ -5,6 +5,7 @@ abstract class Database
 	// public
 	
 	public function connect(){
+		// Connect to mysql server
 		$db_connection = mysql_connect(self::getHost(), self::getUsername(), self::getPassword());
 		
 		if(!defined("fw_mysql"))
@@ -12,6 +13,7 @@ abstract class Database
 	}
 	
 	public static function close($db_link=fw_mysql){
+		// Close connection
 		mysql_close($db_link);
 	}
 	
@@ -19,17 +21,23 @@ abstract class Database
 		if($db == null)
 			$db = self::getDatabase();
 		
+		// Select database
 		mysql_select_db($db, fw_mysql);
 	}
 	
 	// private
 
 	private static function getHost(){
+		// Retrieves the most convenient MySQL host.
+		// Socket is preferred over log in
+		
 		if(defined("fw_mysql_host") && defined("fw_mysql_socket")){
-			if(fw_mysql_socket != NULL){
+			if(fw_mysql_socket != NULL)
+			{
 				return fw_mysql_socket;
 			}
-			else{
+			else
+			{
 				$port = (defined("fw_mysql_port")) ? fw_mysql_port : "";
 				return fw_mysql_host.":".$port;
 			}
@@ -37,21 +45,28 @@ abstract class Database
 	}
 
 	private static function getUsername(){
+		// Retrieves MySQL username
+		
 		if(defined("fw_mysql_user"))
 			return fw_mysql_user;
 	}
 
 	private static function getPassword(){
+		// Retrieves MySQL password
+		
 		if(defined("fw_mysql_password"))
 			return fw_mysql_password;
 	}
 
 	private static function getDatabase(){
+		// Retrieves MySQL database
+		
 		if(defined("fw_mysql_database"))
 			return fw_mysql_database;
 	}
 }
 
+// Class to make MySQL usage easier
 /*
  * $options to be specified as array
  * array may contain:
