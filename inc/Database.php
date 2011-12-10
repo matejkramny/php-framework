@@ -126,8 +126,8 @@ final class DB extends Database {
     }
 
     public static function insert($table, $values) {
-        $build = "INSERT INTO {$table} VALUES " . self::expandArray($values, true);
-
+        $build = "INSERT INTO {$table} SET " . self::expandArray($values, true);
+		echo $build;
         $oDb = self::query($build);
         return $oDb;
     }
