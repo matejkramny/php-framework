@@ -37,4 +37,7 @@ require_once(fw_dir_inc."Browser.php");
 // Activate module
 // Apply template to module
 
+// Set up TemplateHelper with user's a template
 $template_helper = new TemplateHelper ($user == null ? fw_settings_template : $user->template);
+// Template class is in $GLOBALS['fw_template'] variable
+

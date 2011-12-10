@@ -54,35 +54,58 @@ class Routing {
     // Parses URL and decides which module is to be loaded, what language the page is to be displayed in etc.
     private function parseRoute($unparsed) {
     	// Put an unparsed URI string into an array, by the "/" delimiter
-        $oExplode = explode("/", $unparsed);
+        $o = explode("/", $unparsed);
 		
 		// Filter the array elements, and escape unsafe characters.
-        foreach ($oExplode as $key => $string) {
+        foreach ($o as $key => $string) {
             if (strlen($string) == 0) {
-                unset($oExplode[$key]);
+                unset($o[$key]);
                 continue;
             }
 
-            $oExplode[$key] = DB::makeSafe($string);
+            $o[$key] = DB::makeSafe($string);
         }
 		
-        $this->parsed = $oExplode;
-        $route = &$this->route;
+        $this->parsed = $o;
+        $r = &$this->route;
 		
-		// Decide what to do for each array element.
-        foreach ($oExplode as $key => $value) {
-            // check for language (2 char e.g. 'en')
-            // language must be before anything in the uri
-            if (array_key_exists($value, Langs::getLangs()) && $key == 0) {
-                $route["lang"] = $value;
-            }
-            
-            
-            // TODO: module checking. must be in 2 space from / after domain (language before it) 
-            // TODO: module actions.. third from / after domain
-        }
-    }
-
+		// Language
+		$lang = &$r["lang"];
+		if (isset($o[0]))
+		{
+			// Check language existance
+			if ($GLOBALS['fw_langs']->langExists ($o[0]))
+				$lang = $o[0];
+			
+			$lang = fw_settings_lang;
+		}
+		else
+		{
+			// Add a language to the beginning of the URL
+			array_unshift($o, fw_settings_lang);
+			$lang = fw_settings_lang;
+		}
+		
+		// Module
+		$module = &$r["module"];
+		if (isset($o[1]))
+		{
+			// Module class -> moduleExists ($o[1])
+			$module = "home";
+		}
+		else
+		{
+			$module = "home";
+		}
+		
+		// Loop for module Arguments
+		$args = &$r["moduleArguments"];
+		$args = array();
+		for ($i = 2; $i < count($o); $i++)
+		{
+			$args[] = $o[$i];
+		}
+	}
 }
 
 $fw_routing = new Routing;

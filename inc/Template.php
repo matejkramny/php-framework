@@ -1,18 +1,17 @@
-<?php
+ <?php
 
 // Incomplete
 
+// Abstract Base extended by loaded Template
+// TemplateBase contains essential methods a Template should have in order to work
 abstract class TemplateBase {
     public static $module_content;
     
-    public static function message($message)
-    {
-    	
-    }
-    private static function loadFile($fileName)
-    {
-    	
-    }
+    abstract static function message($message);
+    // Used for handling messages sent by module
+    
+    abstract static function loadFile($fileName);
+  	// Used for loading Template related files.
 }
 
 class TemplateHelper
@@ -60,7 +59,6 @@ class TemplateHelper
     	
     	return "template name not found";
     }
-    
 }
 
 /*
