@@ -9,7 +9,8 @@ class Langs {
 
     // public
 
-    public static function getLangs($langCode=NULL) {
+    public static function getLangs($langCode=NULL)
+    {
     	// Retrieve all languages or only one in case $langCode != NULL
     	
     	if ($langCode == NULL)
@@ -33,7 +34,8 @@ class Langs {
         }
     }
 
-    public function loadLanguage($langCode) {
+    public function loadLanguage($langCode)
+    {
     	// Make sure language exists. If not, load default.
         if(!$this->langExists($langCode))
             $langCode = fw_settings_lang;
@@ -50,12 +52,14 @@ class Langs {
         $this->language = json_decode($language, true);
     }
 
-    public static function langExists($langCode) {
+    public static function langExists($langCode)
+    {
     	// Check if language exists
         return self::getLangs($langCode);
     }
     
-    public function addLanguage($add, $langCode){
+    public function addLanguage($add, $langCode)
+    {
     	// Make an addition to the current language translation
     	
     	// Make sure language is flagged as Ready
@@ -68,7 +72,18 @@ class Langs {
         $this->saveLanguage($langCode,$add);
     }
     
-    public function removeLanguage($remove, $langCode){
+    public function changeLanguage ($new, $langCode)
+    {
+    	// Update a language instance
+    	
+    	// Remove instances
+    	$this->removeLanguage ($new, $langCode);
+    	// Add new
+    	$this->addLanguage ($new, $langCode);
+    }
+    
+    public function removeLanguage($remove, $langCode)
+    {
         // Remove a translation from the current language
         
         // Make sure language is flagged as Ready
@@ -86,7 +101,8 @@ class Langs {
         $this->saveLanguage($langCode, $language);
     }
     
-    private function saveLanguage($langCode,$lang){
+    private function saveLanguage($langCode, $lang)
+    {
     	// Save the current translation to .json file
     	
     	// Encode from PHP array to JSON
@@ -96,7 +112,8 @@ class Langs {
         file_put_contents(fw_dir_lib."Languages/{$langCode}.json", $json);
     }
     
-    public function translate($key) {
+    public function translate($key)
+    {
     	// Translate function
     	// Translates $key into its meaning
     	
