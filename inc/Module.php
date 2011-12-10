@@ -4,6 +4,6 @@
 
 abstract class Module
 {
-	function load ($name);
+	abstract function load ($name);
 	
 }

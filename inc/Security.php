@@ -10,7 +10,7 @@ class Security{
 	public static function hash_password($password, $salt=NULL)
 	{
 		// Hashing algorithm for passwords
-		// Produces 256 character-long
+		// Produces a 512bit password hash
 		
 		if($salt == NULL) $salt = self::get_salt();
 		

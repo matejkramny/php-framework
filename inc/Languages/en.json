@@ -1,4 +1,5 @@
 {
 	"language_code": "en",
-	"language_name": "English"
+	"language_name": "English",
+	"footer": "Site scripting © <a href=\"http://matej.me\">Matej Kramny</a>"
 }

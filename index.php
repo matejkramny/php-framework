@@ -32,3 +32,9 @@ $GLOBALS['fw_langs']->loadLanguage(($user == null) ? fw_settings_lang : $user->l
 // user-agent related
 require_once(fw_dir_inc."Browser.php");
 
+// Set up modules
+// Set up templating
+// Activate module
+// Apply template to module
+
+$template_helper = new TemplateHelper ($user == null ? fw_settings_template : $user->template);

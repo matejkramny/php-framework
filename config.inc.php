@@ -35,8 +35,12 @@ $fw_db->connect();
 $fw_db->selectDb(fw_mysql_database);
 
 // general settings loaded from database
-define("fw_site_enabled", true);
 require_once(fw_dir_lib."settings.php");
 
 // url routing
 require_once(fw_dir_inc."Routing.php");
+
+// Template
+require_once(fw_dir_inc."Template.php");
+// Module
+require_once(fw_dir_inc."Module.php");

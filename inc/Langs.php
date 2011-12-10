@@ -25,7 +25,7 @@ class Langs {
             foreach (self::$langs as $arr) {
                 $return[$arr["lang_code"]] = $arr["lang_full"];
             }
-
+			var_dump($return);
             return $return;
         } else {
             // Return row of wanted language ($langCode)
