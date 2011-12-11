@@ -2,11 +2,24 @@
 
 final class Template extends TemplateBase
 {
-	static function message ($message)
+	function haveFun ()
 	{
+		$contents = parent::loadFile ("base.html", array (
+			'PAGE_TITLE' => "My Page TITLE",
+			'PAGE_CONTENT' => "My Page CONTENT",
+			'ExampleIF' => array (
+				'type' => 'if',
+				'condition' => 'true',
+				'true' => "Hello world!",
+				'false' => "No HELL!"
+			)
+		));
 		
+		echo $contents;
 	}
-	static function loadFile ($fileName)
+	
+	// Overrides
+	static function message ($message)
 	{
 		
 	}

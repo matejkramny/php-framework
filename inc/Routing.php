@@ -44,10 +44,15 @@ class Routing {
             $route = $this->route;
 
         if (!defined("fw_uri_lang")) {
-            if (!isset($route["lang"]))
-                define("fw_uri_lang", fw_settings_lang);
-            else
-                define("fw_uri_lang", $route["lang"]);
+            define("fw_uri_lang", $route["lang"]);
+        }
+        if (!defined("fw_uri_module"))
+        {
+        	define ("fw_uri_module", $route["module"]);
+        }
+        if (!defined("fw_uri_module_args"))
+        {
+        	$GLOBALS["module_arguments"] = $route["moduleArguments"];
         }
     }
 

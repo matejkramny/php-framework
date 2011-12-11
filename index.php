@@ -27,7 +27,7 @@ $user = $GLOBALS['fw_security']->authenticatedUser;
 $loggedIn = isset($_SESSION['loggedIn']) ? $_SESSION['loggedIn'] : false;
 
 // Load current language
-$GLOBALS['fw_langs']->loadLanguage(($user == null) ? fw_settings_lang : $user->lang);
+$GLOBALS['fw_langs']->loadLanguage(fw_uri_lang);
 
 // user-agent related
 require_once(fw_dir_inc."Browser.php");
@@ -41,3 +41,4 @@ require_once(fw_dir_inc."Browser.php");
 $template_helper = new TemplateHelper ($user == null ? fw_settings_template : $user->template);
 // Template class is in $GLOBALS['fw_template'] variable
 
+$GLOBALS['fw_template']->haveFun();
