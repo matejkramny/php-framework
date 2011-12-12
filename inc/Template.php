@@ -124,7 +124,7 @@ abstract class TemplateBase {
 		{
 			if (is_array ($val)) continue;
 
-			$output .= str_replace ($var, $val, $data);
+			$output .= str_replace ('{'.$var.'}', $val, $data);
 		}
 
 		$output .= $end;
