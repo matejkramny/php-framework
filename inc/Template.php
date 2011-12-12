@@ -110,7 +110,27 @@ abstract class TemplateBase {
     		if (!isset ($value['type']) || strtolower($value['type']) != 'loop')
     			continue;
     		
-    		// To be finished!
+		if (!isset ($value['__start']) || !isset ($value['__data']) || !isset ($value['__end']))
+			continue;
+
+		$start = $value['__start'];
+		$data = $value['__data'];
+		$end = $value['__end'];
+
+		unset ($value['__start'], $value['__data'], $value['__end']);
+
+		$output = $start;
+		foreach ($value as $var => $val)
+		{
+			if (is_array ($val)) continue;
+
+			$output .= str_replace ($var, $val, $data);
+		}
+
+		$output .= $end;
+
+		$one = 1;
+		$c = str_replace ('{LOOP '.$key.'}', $output, $c, $one);
     	}
     	
     	return $c;
