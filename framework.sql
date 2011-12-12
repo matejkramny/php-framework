@@ -3,17 +3,11 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 13, 2011 at 10:52 PM
+-- Generation Time: Dec 12, 2011 at 10:17 PM
 -- Server version: 5.1.44
 -- PHP Version: 5.3.2
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `framework`
@@ -25,7 +19,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Table structure for table `profiles`
 --
 
-CREATE TABLE IF NOT EXISTS `profiles` (
+CREATE TABLE `profiles` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(256) NOT NULL,
   `surname` varchar(256) NOT NULL,
@@ -39,13 +33,13 @@ CREATE TABLE IF NOT EXISTS `profiles` (
   `last_access` int(10) NOT NULL,
   `last_ip` varchar(15) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `profiles`
 --
 
-INSERT INTO `profiles` VALUES(1, 'matej', 'kramny', 'mkram0', 'matejkramny@gmail.com', '', '', 'en', 0, 0, 0, '::1');
+INSERT INTO `profiles` VALUES(3, 'matej', 'kramny', 'mkram0', 'matejkramny@gmail.com', '63c7727ac872c8e3', '6kBQL1VzVnJQOfEmozDEByJFZv557oJwF6TAKXHQqNY5VSITHESmTp6zJcaZR9mzmA4DhZBiNjUB.qZdmEPlv0', 'en', 1, 1323521498, 0, '');
 
 -- --------------------------------------------------------
 
@@ -53,7 +47,7 @@ INSERT INTO `profiles` VALUES(1, 'matej', 'kramny', 'mkram0', 'matejkramny@gmail
 -- Table structure for table `sys_bans`
 --
 
-CREATE TABLE IF NOT EXISTS `sys_bans` (
+CREATE TABLE `sys_bans` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `uid` int(11) unsigned NOT NULL,
   `ip` varchar(15) NOT NULL,
@@ -72,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `sys_bans` (
 -- Table structure for table `sys_languages`
 --
 
-CREATE TABLE IF NOT EXISTS `sys_languages` (
+CREATE TABLE `sys_languages` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `lang_code` varchar(5) NOT NULL,
   `lang_full` varchar(256) NOT NULL,
@@ -91,18 +85,20 @@ INSERT INTO `sys_languages` VALUES(1, 'en', 'English');
 -- Table structure for table `sys_settings`
 --
 
-CREATE TABLE IF NOT EXISTS `sys_settings` (
+CREATE TABLE `sys_settings` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(256) NOT NULL,
   `value` varchar(256) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `sys_settings`
 --
 
 INSERT INTO `sys_settings` VALUES(1, 'lang', 'en');
+INSERT INTO `sys_settings` VALUES(2, 'template', '1');
+INSERT INTO `sys_settings` VALUES(3, 'template_path', 'default');
 
 -- --------------------------------------------------------
 
@@ -110,7 +106,7 @@ INSERT INTO `sys_settings` VALUES(1, 'lang', 'en');
 -- Table structure for table `sys_templates`
 --
 
-CREATE TABLE IF NOT EXISTS `sys_templates` (
+CREATE TABLE `sys_templates` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(256) NOT NULL,
   `path` varchar(256) NOT NULL,
