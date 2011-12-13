@@ -1,2 +1,7 @@
 User-agent: *
+
+# Stop crawling on non-public files
 Disallow: /inc/
+Disallow: /modules/
+Disallow: /templates/
+Disallow: /logs/
