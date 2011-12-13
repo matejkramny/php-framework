@@ -9,8 +9,6 @@ abstract class Module
 final class Form
 {
 	// Contructor
-	public function Form ($a)
-	{
 		/*
 		 * $a = array (
 		 *     'action' => 'some url', // optional, default is the same page
@@ -35,6 +33,8 @@ final class Form
 		 *	- checkbox ( required (bool) }
 		 *	- custom { content (string) }
 		 */
-
+	public function Form ($a)
+	{
+		
 	}
 }
