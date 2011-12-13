@@ -122,9 +122,15 @@ abstract class TemplateBase {
 		$output = $start;
 		foreach ($value as $var => $val)
 		{
-			if (is_array ($val)) continue;
+			if (!is_array ($val)) continue;
 
-			$output .= str_replace ('{'.$var.'}', $val, $data);
+			$temp = $data;
+			foreach ($val as $rKey => $rVal)
+			{
+				$temp = str_replace ('{'.$rKey.'}', $rVal, $temp);
+			}
+
+			$output .= $temp;
 		}
 
 		$output .= $end;

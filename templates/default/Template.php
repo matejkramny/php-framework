@@ -15,14 +15,16 @@ final class Template extends TemplateBase
 			),
 			'ExampleLoop' => array (
 				'type' => 'loop',
-				'__start' => '<strong>This is the start of the loop</strong>',
-				'__data' => '<font style="color:red;">This is some data of the {MYVAR}</font>',
-				'__end' => '<strong>This is the end of the loop</strong>',
+				'__start' => '<table><thead><th>ID</th><th>Label</th></thead><tbody>',
+				'__data' => '<tr><td>{ID}</td><td>{LABEL}</td></tr>',
+				'__end' => '</tbody></table>',
 				array (
-					'MYVAR' => 'Hello123'
+					'ID' => 1,
+					'LABEL' => 'first label'
 				      ),
 				array (
-					'MYVAR' => 'Hello World'
+					'ID' => 2,
+					'LABEL' => 'second label'
 				      )
 				)
 		));
