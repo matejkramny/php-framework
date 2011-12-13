@@ -35,6 +35,5 @@ final class Form
 		 */
 	public function Form ($a)
 	{
-		
 	}
 }
