@@ -42,3 +42,19 @@ $template_helper = new TemplateHelper ($user == null ? fw_settings_template : $u
 // Template class is in $GLOBALS['fw_template'] variable
 
 $GLOBALS['fw_template']->haveFun();
+
+$dat = array (
+		'action' => "http://www.google.com/",
+		'method' => "ppoost",
+		'enctype' => "multipart/form-data",
+		'data' => array (
+			'username' => array (
+				'type' => 'input',
+				'required' => true,
+				'value' => "Username: ",
+				'name' => "username"
+				)
+			)
+	     );
+
+$form = new Form ($dat);

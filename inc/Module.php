@@ -51,22 +51,31 @@ final class Form
 	private $action;
 	private function setAction ($action)
 	{
-		
+		$this->action = $action;
 	}
 	private $method;
 	private function setMethod ($method)
 	{
-		
+		$m = strtoupper ($method);
+		if ($m != "POST" || $m != "GET")
+			$m = "POST";
+
+		$this->method = $m;
 	}
 	private $encoding;
 	private function setEncoding ($encoding)
 	{
-		
+		// Only two encoding types can be accepted, if NULL (undefined) or not equal to multipart/form-data, a default enctype is set
+		if ($encoding == NULL || strtolower($encoding) != "multipart/form-data")
+			$encoding = "application/x-www-form-urlencoded";
+
+		$this->encoding = $encoding;
 	}
 	private $data;
 	private function setData ($data)
 	{
-		
+		var_dump ($data);
+
 	}
 	
 	private $submitted;
