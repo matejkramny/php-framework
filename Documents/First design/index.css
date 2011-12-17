@@ -1,0 +1,110 @@
+#header
+{
+	width: 100%;
+	min-width: 980px;
+}
+#header #navigation_bg
+{
+	width: 100%;
+	min-width: inherit;
+	background: url(images/repeat_x.png) 0px -42px repeat-x;
+	height: 119px;
+}
+#header #navigation_bg #navigation
+{
+	width: 980px;
+	margin: 0 auto;
+	height: 89px;
+}
+#header #navigation_bg #navigation ul
+{
+	width: inherit;
+	height: inherit;
+}
+#header #navigation_bg #navigation ul li
+{
+	float: left;
+	text-indent: -99999999px;
+	height: inherit;
+	margin: auto;
+	position:relative;
+	cursor: pointer;
+}
+#header #navigation_bg #navigation ul li a
+{
+	display: block;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	margin: auto;
+}
+#header #navigation_bg #navigation ul li#nav_about
+{
+	width: 159px;
+	height: inherit;
+}
+#header #navigation_bg #navigation ul li#nav_features
+{
+	width: 202px;
+	height: inherit;
+}
+#header #navigation_bg #navigation ul li#nav_documentation
+{
+	width: 303px;
+	height: inherit;
+}
+#header #navigation_bg #navigation ul li#nav_faq
+{
+	width: 127px;
+	height: inherit;
+}
+#header #navigation_bg #navigation ul li#nav_support
+{
+	width: 189px;
+	height: inherit;
+}
+#header #navigation_bg #navigation ul li#nav_about a
+{
+	background:url(images/no_repeat.png) no-repeat 0px -266px;
+	width: 106px;
+	height: 29px;
+}
+#header #navigation_bg #navigation ul li#nav_features a
+{
+	background:url(images/no_repeat.png) no-repeat 0px -296px;
+	width: 149px;
+	height: 29px;
+}
+#header #navigation_bg #navigation ul li#nav_documentation a
+{
+	background:url(images/no_repeat.png) no-repeat 0px -326px;
+	width: 262px;
+	height: 29px;
+}
+#header #navigation_bg #navigation ul li#nav_faq a
+{
+	background:url(images/no_repeat.png) no-repeat 0px -356px;
+	width: 73px;
+	height: 30px;
+}
+#header #navigation_bg #navigation ul li#nav_support a
+{
+	background: url(images/no_repeat.png) no-repeat 0px -387px;
+	width: 140px;
+	height: 35px;
+}
+
+#content
+{
+}
+#content #container
+{
+}
+#content #left_arrow
+{
+}
+#content #right_arrow
+{
+}

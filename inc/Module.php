@@ -35,10 +35,10 @@ final class Form
 	 */
     public function Form ($a)
     {
-        $this->setAction (isset ($a['action']) ? $a['action'] : "");
+        $this->action = isset ($a['action']) ? $a['action'] : "";
         $this->setMethod (isset ($a['method']) ? $a['method'] : "POST");
         $this->setEncoding (isset ($a['enctype']) ? $a['enctype'] : NULL);
-        $this->setData ($a['data']);
+        $this->data = $a['data'];
 
         if (!$this->formSubmitted ())
             $this->buildForm ();
@@ -49,11 +49,14 @@ final class Form
     }
 
     private $action;
-    private function setAction ($action)
-    {
-        $this->action = $action;
-    }
     private $method;
+    private $encoding;
+    private $data;
+    private $submitted;
+    private $valid;
+	private $addedScriptsToTemplate;
+    private $formCode;
+    
     private function setMethod ($method)
     {
         $m = strtoupper ($method);
@@ -62,7 +65,6 @@ final class Form
 
         $this->method = $m;
     }
-    private $encoding;
     private function setEncoding ($encoding)
     {
         // Only two encoding types can be accepted, if NULL (undefined) or not equal to multipart/form-data, a default enctype is set
@@ -71,14 +73,6 @@ final class Form
 
         $this->encoding = $encoding;
     }
-    private $data;
-    private function setData ($data)
-    {
-        var_dump ($data);
-
-    }
-
-    private $submitted;
     public function formSubmitted ()
     {
         // Not worth wasting time reevaluating form submission once it has been done
@@ -86,9 +80,8 @@ final class Form
             return $this->submitted;
 
         // Check if form is submitted
-    }
-
-    private $valid;
+   	}
+   	
     public function formValid ()
     {
         if ($this->valid == NULL)
@@ -100,14 +93,26 @@ final class Form
     {
         return ($this->formSubmitted() && $this->formValid()) ? true : false;
     }
-
+    
     private function validateForm ()
     {
-        // Validate form.
+        // Validate form
+        
+        // Cannot validate form if not submitted
+        if (!$this->formSubmitted ())
+        	return false;
+        
+        
     }
-
-    private $addedScriptsToTemplate;
-
+    
+    private function buildForm ()
+    {
+    	if ($this->formCode != NULL)
+    		return $this->formCode;
+    	
+    	// Build form
+    	
+    }
     public function getCode ()
     {
         // Get the HTML out
@@ -116,8 +121,10 @@ final class Form
 		if (!$this->addedScriptsToTemplate == NULL || !$this->addedScriptsToTemplate == false)
 		{
 			$this->addedScriptsToTemplate = true;
-
+			
 			// Add form CSS and JS to current Template
 		}
+		
+		return $this->buildForm ();
 	}
 }
