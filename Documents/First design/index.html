@@ -9,10 +9,24 @@
 	
 	<body>
     	<div id="header">
-        	<div id="messages"></div>
+        	<div id="messages">
+            	<div class="message">
+                	<p>Sample message. #1.</p>
+                	<div class="message_close_button"></div>
+                </div>
+                <div class="message_divider"></div>
+                <div class="message">
+                	<p>Sample message. #2.</p>
+                	<div class="message_close_button"></div>
+                </div>
+            </div>
         	<div id="navigation_bg">
-            	<div id="navigation_hover"></div>
             	<div id="navigation">
+                	<div id="nav_hover">
+                		<div id="nav_hover_left"></div>
+                        <div id="nav_hover_bg"></div>
+                    	<div id="nav_hover_right"></div>
+                	</div>
                 	<ul>
                 		<li id="nav_about"><a>About</a></li>
 	                    <li id="nav_features"><a>Features</a></li>
@@ -29,4 +43,10 @@
             <div id="right_arrow"></div>
         </div>
 	</body>
+    
+    <!-- Scripts to not affect load of other documents -->
+    <script type="text/javascript" language="javascript" src="jquery.js"></script>
+    <script type="text/javascript" language="javascript" src="jquery_ui.js"></script>
+    <script type="text/javascript" language="javascript" src="index.js"></script>
+    
 </html>

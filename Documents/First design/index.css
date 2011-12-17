@@ -1,8 +1,55 @@
+body
+{
+	background:url(images/bg.png) repeat;
+}
+
 #header
 {
 	width: 100%;
 	min-width: 980px;
 }
+
+/* Messages */
+#header #messages
+{
+	width: 100%;
+	background: url(images/message_bg.png) repeat;
+	
+	position:relative;
+}
+#header #messages .message_divider
+{
+	height: 1px;
+	width: inherit;
+	background: #666;
+}
+#header #messages .message
+{
+	position:relative;
+	min-width: 980px;
+	overflow: hidden;
+	height: 50px;
+}
+#header #messages .message p
+{
+	padding: 10px;
+	color:#CCC;
+	font-size: 24px;
+	text-align: center;
+	letter-spacing: 1px;
+	height: inherit;
+}
+#header #messages .message .message_close_button
+{
+	width: 44px;
+	height: 44px;
+	background:url(images/no_repeat.png) no-repeat 0px -494px;
+	position:absolute;
+	right: 3px;
+	top: 3px;
+}
+
+/* Navigation */
 #header #navigation_bg
 {
 	width: 100%;
@@ -14,7 +61,8 @@
 {
 	width: 980px;
 	margin: 0 auto;
-	height: 89px;
+	height: 90px;
+	position:relative;
 }
 #header #navigation_bg #navigation ul
 {
@@ -69,31 +117,61 @@
 {
 	background:url(images/no_repeat.png) no-repeat 0px -266px;
 	width: 106px;
-	height: 29px;
+	height: 36px;
 }
 #header #navigation_bg #navigation ul li#nav_features a
 {
-	background:url(images/no_repeat.png) no-repeat 0px -296px;
+	background:url(images/no_repeat.png) no-repeat 0px -303px;
 	width: 149px;
-	height: 29px;
+	height: 36px;
 }
 #header #navigation_bg #navigation ul li#nav_documentation a
 {
-	background:url(images/no_repeat.png) no-repeat 0px -326px;
+	background:url(images/no_repeat.png) no-repeat 0px -340px;
 	width: 262px;
-	height: 29px;
+	height: 36px;
 }
 #header #navigation_bg #navigation ul li#nav_faq a
 {
-	background:url(images/no_repeat.png) no-repeat 0px -356px;
+	background:url(images/no_repeat.png) no-repeat 0px -377px;
 	width: 73px;
-	height: 30px;
+	height: 36px;
 }
 #header #navigation_bg #navigation ul li#nav_support a
 {
-	background: url(images/no_repeat.png) no-repeat 0px -387px;
+	background: url(images/no_repeat.png) no-repeat 0px -414px;
 	width: 140px;
-	height: 35px;
+	height: 36px;
+}
+
+/* Navigation hover */
+#header #navigation_bg #navigation #nav_hover
+{
+	height: inherit;
+	width: 159px;
+	position: absolute;
+	left: 0px;
+}
+#header #navigation_bg #navigation #nav_hover #nav_hover_left
+{
+	background:url(images/no_repeat.png) no-repeat 0px 0px;
+	width: 20px;
+	height: inherit;
+	float:left;
+}
+#header #navigation_bg #navigation #nav_hover #nav_hover_bg
+{
+	background:url(images/repeat_x.png) repeat-x 0px -162px;
+	width: 119px;
+	height: inherit;
+	float: left;
+}
+#header #navigation_bg #navigation #nav_hover #nav_hover_right
+{
+	background:url(images/no_repeat.png) no-repeat 0px -91px;
+	width: 20px;
+	height: inherit;
+	float:right;
 }
 
 #content
