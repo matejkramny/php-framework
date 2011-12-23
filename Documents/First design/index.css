@@ -176,8 +176,37 @@ body
 
 #content
 {
+	width: 980px;
+	position:relative;
 }
 #content #container
+{
+}
+#content #container #cont_top_left
+{
+}
+#content #container #cont_top
+{
+}
+#content #container #cont_top_right
+{
+}
+#content #container #cont_left
+{
+}
+#content #container #cont_content
+{
+}
+#content #container #cont_right
+{
+}
+#content #container #cont_bottom_left
+{
+}
+#content #container #cont_bottom
+{
+}
+#content #container #cont_bottom_right
 {
 }
 #content #left_arrow
