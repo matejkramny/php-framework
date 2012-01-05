@@ -50,6 +50,7 @@ body
 	position:absolute;
 	right: 3px;
 	top: 3px;
+	cursor:pointer;
 }
 
 /* Navigation */
@@ -181,40 +182,66 @@ body
 {
 	width: 980px;
 	position:relative;
+	margin: 0 auto;
 }
 #content #container
 {
 }
+#content #container #cont_top_left, #content #container #cont_top_right, #content #container #cont_bottom_left, #content #container #cont_bottom_right
+{
+	height: 20px;
+	width: 20px;
+	background:url(images/no_repeat.png) no-repeat;
+}
 #content #container #cont_top_left
 {
+	background-position: 0px -203px;
+	float:left;
 }
 #content #container #cont_top
 {
+	height: 20px;
+	width: 940px;
+	background:url(images/repeat_x.png) repeat-x 0px -21px;
+	float:left;
 }
 #content #container #cont_top_right
 {
+	background-position:0px -245px;
+	float:right;
 }
 #content #container #cont_left
 {
+	width: 20px;
+	background: url(images/repeat_y.png) repeat-y 0px 0px;
+	float:left;
 }
 #content #container #cont_content
 {
+	float:left;
+	background: url(images/cont_repeat.png) repeat;
+	width: 940px;
 }
 #content #container #cont_right
 {
+	width: 20px;
+	background:url(images/repeat_y.png) repeat-y -21px 0px;
+	float:right;
 }
 #content #container #cont_bottom_left
 {
+	background-position: 0px -182px;
+	float:left;
 }
 #content #container #cont_bottom
 {
+	height: 20px;
+	width: 940px;
+	background:url(images/repeat_x.png) repeat-x 0px 0px;
+	float:left;
 }
 #content #container #cont_bottom_right
 {
-}
-#content #left_arrow
-{
-}
-#content #right_arrow
-{
+	background-position:0px -224px;
+	float:right;
 }

@@ -7,10 +7,18 @@ $(document).ready(function(e) {
 	$("#nav_support").navigate("nav_support");
 	
 	$("#test_button").click(function () {
-		$("#messages").insertMessage ("Hello to framework website. it is great", 4000 , "_red");
+		$("#messages").insertMessage ("You have been logged out.", 0 , "");
 	});
 	
+	$("#container").updateContainerHeights();
+	$().moveSlider(sliderOrigin);
 });
+
+$.fn.updateContainerHeights = function () 
+{
+	$("#cont_left").css ("height", $("#cont_content").innerHeight());
+	$("#cont_right").css ("height", $("#cont_content").innerHeight());
+}
 
 $.fn.navigate = function (name)
 {
@@ -18,11 +26,51 @@ $.fn.navigate = function (name)
 		$("#nav_hover").moveSlider(name);
 	}).mouseout(function(e) {
         $("#nav_hover").moveSlider(null);
-    });
+    }).click (function () {
+		$("#nav_hover").moveSlider(name);
+		sliderOrigin = sliderAt = name;
+		
+		$("#cont_content").fetchPage (name);
+	});
 }
 
-var sliderAt = "nav_about";
-var sliderOrigin = "nav_about";
+$.fn.fetchPage = function (id)
+{
+	var href = $("#" + id + " a").attr("href");
+	if (href.length < 1)
+		return false;
+	
+	href = href.substr(0, 1);
+	
+	var message = null;
+	$.ajax({
+		url: "/" + href,
+		data: "?sendPageContent=true",
+		dataType: "html",
+		type: "POST",
+		success: function (data)
+		{
+			$("#cont_content").html(data);
+			$().updateContainerHeights();
+		},
+		error: function ()
+		{
+			$().insertMessage("Sorry, but the page could not be loaded asynchronously. Redirecting...", 2000, "_red");
+			setTimeout (function () {
+				window.location = "/" + href;
+			}, 2000);
+		},
+		beforeSend: function ()
+		{
+			message = $().insertMessage("Loading requested page asynchronously. Please wait.", 0);
+		},
+		complete: function ()
+		{
+			$(message).removeMessage();
+		}
+	});
+};
+
 $.fn.moveSlider = function(moveto) {
 	var speed = 'fast';
 	
@@ -80,32 +128,56 @@ $.fn.insertMessage = function (message, expire, color)
 			+ '</div>');
 		
 		var mID = $("#easing_temp");
-		if (expire != 0)
-		{	var timer = setTimeout (function () {
-				if ($(mID).next().attr("class") == "message_divider")
-				{
-					$(mID).next().remove();
-				}
-				$(mID).hide('fast', function () { $(this).remove(); });
-				
-				if (messageCount > 0)
-					messageCount--;
+		var timer = null;
+		if (typeof expire === "undefined" || expire != 0)
+		{	timer = setTimeout (function () {
+				$(mID).removeMessage();
 			}, expire);
 		}
 		
+		$(mID).find ("div").click (function () {
+			$(mID).removeMessage();
+		}).mouseout (function () {
+			$(this).stop(true).animate({ opacity: 0.3 }, 100, function () {
+				$(this).css("background", "url(images/no_repeat.png) 0px -494px");
+				$(this).animate({ opacity: 1 }, "fast");
+			});
+		}).mouseover (function () {
+			$(this).stop(true).animate({ opacity: 0.3 }, 100, function () {
+				$(this).css("background", "url(images/no_repeat.png) 0px -450px");
+				$(this).animate({ opacity: 1 }, 'fast');
+			});
+		});
+				
 		$("#easing_temp").hide ().show ('slow').removeAttr ("id");
+		
+		return mID;
 	}
 	
 	if (messageCount == 0)
 	{
 		removeMessages ();
-		addMessage (message);
+		var m = addMessage (message);
 	}
 	else
 	{
 		addSpacer ();
-		addMessage (message);
+		var m = addMessage (message);
 	}
 	
 	messageCount++;
+	
+	return m;
 };
+
+$.fn.removeMessage = function ()
+{
+	if ($(this).next().attr("class") == "message_divider")
+	{
+		$(this).next().remove();
+	}
+	$(this).hide('fast', function () { $(this).remove(); });
+				
+	if (messageCount > 0)
+		messageCount--;
+}

@@ -10,15 +10,6 @@
 	<body>
     	<div id="header">
         	<div id="messages">
-            	<div class="message">
-                	<p>Sample message. #1.</p>
-                	<div class="message_close_button"></div>
-                </div>
-                <div class="message_divider"></div>
-                <div class="message">
-                	<p>Sample message. #2.</p>
-                	<div class="message_close_button"></div>
-                </div>
             </div>
         	<div id="navigation_bg">
             	<div id="navigation">
@@ -28,35 +19,41 @@
                     	<div id="nav_hover_right"></div>
                 	</div>
                 	<ul>
-                		<li id="nav_about"><a>About</a></li>
-	                    <li id="nav_features"><a>Features</a></li>
-    	                <li id="nav_documentation"><a>Documentation</a></li>
-        	            <li id="nav_faq"><a>FAQ</a></li>
-            	        <li id="nav_support"><a>Support</a></li>
+                		<li id="nav_about"><a href="#about">About</a></li>
+	                    <li id="nav_features"><a href="#features">Features</a></li>
+    	                <li id="nav_documentation"><a href="#documentation">Documentation</a></li>
+        	            <li id="nav_faq"><a href="#faq">FAQ</a></li>
+            	        <li id="nav_support"><a href="#support">Support</a></li>
                 	</ul>
                 </div>
             </div>
         </div>
         <div id="content">
-        	<div id="left_arrow"></div>
         	<div id="container">
-            <input type="button" id="test_button" value="Test button">
-            <label>Checkbox</label><input type="checkbox" id="test_checkbox">
 				<div id="cont_top_left"></div>
 				<div id="cont_top"></div>
 				<div id="cont_top_right"></div>
+                <div style="clear:both"></div>
 				<div id="cont_left"></div>
-				<div id="cont_content"></div>
+				<div id="cont_content">
+                	<p>Hello world!</p>
+                    <br />
+                    <p><input type="button" id="test_button" value="Test button"></p>
+                </div>
 				<div id="cont_right"></div>
+                <div style="clear:both"></div>
 				<div id="cont_bottom_left"></div>
 				<div id="cont_bottom"></div>
 				<div id="cont_bottom_right"></div>
         	</div>
-            <div id="right_arrow"></div>
         </div>
 	</body>
     
-    <!-- Scripts to not affect load of other documents -->
+    <!-- Scripts not to affect load of other documents -->
+    <script type="text/javascript" language="javascript">
+		var sliderAt;
+		var sliderOrigin = sliderAt = "nav_faq";
+    </script>
     <script type="text/javascript" language="javascript" src="jquery.js"></script>
     <script type="text/javascript" language="javascript" src="jquery_ui.js"></script>
     <script type="text/javascript" language="javascript" src="index.js"></script>
