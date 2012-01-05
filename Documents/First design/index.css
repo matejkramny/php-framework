@@ -14,7 +14,6 @@ body
 {
 	width: 100%;
 	background: url(images/message_bg.png) repeat;
-	
 	position:relative;
 }
 #header #messages .message_divider
@@ -23,14 +22,14 @@ body
 	width: inherit;
 	background: #666;
 }
-#header #messages .message
+#header #messages .message, #header #messages .message_red
 {
 	position:relative;
 	min-width: 980px;
 	overflow: hidden;
 	height: 50px;
 }
-#header #messages .message p
+#header #messages .message p, #header #messages .message_red p
 {
 	padding: 10px;
 	color:#CCC;
@@ -39,7 +38,11 @@ body
 	letter-spacing: 1px;
 	height: inherit;
 }
-#header #messages .message .message_close_button
+#header #messages .message_red p
+{
+	color:#F00;
+}
+#header #messages .message .message_close_button, #header #messages .message_red .message_close_button
 {
 	width: 44px;
 	height: 44px;
