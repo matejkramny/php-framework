@@ -87,6 +87,9 @@ $.fn.insertMessage = function (message, expire, color)
 					$(mID).next().remove();
 				}
 				$(mID).hide('fast', function () { $(this).remove(); });
+				
+				if (messageCount > 0)
+					messageCount--;
 			}, expire);
 		}
 		
