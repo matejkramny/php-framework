@@ -5,6 +5,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <link rel="stylesheet" media="all" href="reset.css">
         <link rel="stylesheet" media="all" href="index.css">
+        <link rel="stylesheet" media="all" href="jqtransform.css">
 	</head>
 	
 	<body>
@@ -38,7 +39,12 @@
 				<div id="cont_content">
                 	<p>Hello world!</p>
                     <br />
-                    <p><input type="button" id="test_button" value="Test button"></p>
+                    <p>
+                    	<form>
+                    		<input type="button" id="test_button" value="Test button"><br />
+                    		<label>Username: </label><input type="text" id="test_text">
+                        </form>
+                    </p>
                 </div>
 				<div id="cont_right"></div>
                 <div style="clear:both"></div>
@@ -56,5 +62,6 @@
     </script>
     <script type="text/javascript" language="javascript" src="jquery.js"></script>
     <script type="text/javascript" language="javascript" src="jquery_ui.js"></script>
+    <script type="text/javascript" language="javascript" src="jquery.jqtransform.js"></script>
     <script type="text/javascript" language="javascript" src="index.js"></script>
 </html>

@@ -5,12 +5,15 @@ $(document).ready(function(e) {
 	$("#nav_faq").navigate("nav_faq");
 	$("#nav_support").navigate("nav_support");
 	
+	$().moveSlider(sliderOrigin);
+	
+	$('form').jqTransform({imgPath:'jqtransform/'});
+	
+	$("#container").updateContainerHeights();
+	
 	$("#test_button").click(function () {
 		$("#messages").insertMessage ("You have been logged out.");
 	});
-	
-	$("#container").updateContainerHeights();
-	$().moveSlider(sliderOrigin);
 });
 
 $.fn.updateContainerHeights = function () 
