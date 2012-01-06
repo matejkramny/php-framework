@@ -1,5 +1,4 @@
 $(document).ready(function(e) {
-    
 	$("#nav_about").navigate ("nav_about");
 	$("#nav_features").navigate("nav_features");
 	$("#nav_documentation").navigate("nav_documentation");
@@ -7,7 +6,7 @@ $(document).ready(function(e) {
 	$("#nav_support").navigate("nav_support");
 	
 	$("#test_button").click(function () {
-		$("#messages").insertMessage ("You have been logged out.", 0 , "");
+		$("#messages").insertMessage ("You have been logged out.");
 	});
 	
 	$("#container").updateContainerHeights();
@@ -129,8 +128,9 @@ $.fn.insertMessage = function (message, expire, color)
 		
 		var mID = $("#easing_temp");
 		var timer = null;
-		if (typeof expire === "undefined" || expire != 0)
-		{	timer = setTimeout (function () {
+		if (typeof expire !== "undefined" && expire != 0)
+		{
+			timer = setTimeout (function () {
 				$(mID).removeMessage();
 			}, expire);
 		}
