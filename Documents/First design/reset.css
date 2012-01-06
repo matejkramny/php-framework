@@ -42,3 +42,27 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+br {
+	clear:left;
+}
+
+h1
+{
+	font-size: larger;
+}
+h2
+{
+	font-size: large;
+}
+h3
+{
+	font-size: medium;
+}
+h4
+{
+	font-size: small;
+}
+h5
+{
+	font-size: smaller;
+}

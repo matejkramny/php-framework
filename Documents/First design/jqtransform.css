@@ -4,6 +4,11 @@ form.jqtransformdone label{
 	display: block;
 	float:left;
 }
+form.jqtransformdone label.leftLabel
+{
+	margin-top: 8px;
+	width: 120px;
+}
 form.jqtransformdone div.rowElem{
 	clear:both;
 	padding:4px 0px;
@@ -68,6 +73,7 @@ button.jqTransformButton_click span { background-position: right -66px ; }
 	height: 31px;
 	padding: 0px;
 	float:left;
+	margin-bottom: 5px;
 }
 
 .jqTransformInputInner {

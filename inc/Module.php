@@ -14,11 +14,12 @@ final class Form
 	 *     'action' => 'some url', // optional, default is the same page
 	 *     'method' => 'post or get', // optional, default is POST
 	 *     'enctype' => 'encoding type', // optional
-	 *     'data' => array (
+	 *     'data' => array ( // required
 	 *         'somelabel' => array (
 	 *             'type' => 'datatype',
-	 *             'label' => 'the information before the input, like "Username:"'
-	 *             'name' => 'name of the element, to be accessed as $_GET/POST["yournameofelement"]'
+	 *             'label' => 'the information before the input, like "Username:"',
+	 *             'name' => 'name of the element, to be accessed as $_GET/POST["yournameofelement"]',
+	 *			   'id' => 'the id of the element, accessible by javascript'
 	 *             // more optional parameters based on the 'type'
 	 *         )
 	 *     )
@@ -29,8 +30,14 @@ final class Form
 	 * 	- input { required (bool), value (string), validator (array ( length (int), regex (string), error (string) )) }
 	 *	- password { required (bool), value (string), validator (array ( length (int), regex (string), error (string) )) }
 	 *	- file { required (bool), location (string) }
-	 *	- radio ( required (bool) }
-	 *	- checkbox ( required (bool) }
+	 *	- radio { required (bool) }
+	 *	- checkbox { required (bool) }
+	 *  - hidden { value (string) }
+	 *  - button { value (string) }
+	 *  - submit { value (string) }
+	 *  - reset { value (string) }
+	 *  - header { legend (string) }
+	 *  - headerend { }
 	 *	- custom { content (string) }
 	 */
     public function Form ($a)
@@ -80,6 +87,7 @@ final class Form
             return $this->submitted;
 
         // Check if form is submitted
+        
    	}
    	
     public function formValid ()
@@ -104,15 +112,6 @@ final class Form
         
         
     }
-    
-    private function buildForm ()
-    {
-    	if ($this->formCode != NULL)
-    		return $this->formCode;
-    	
-    	// Build form
-    	
-    }
     public function getCode ()
     {
         // Get the HTML out
@@ -127,4 +126,81 @@ final class Form
 		
 		return $this->buildForm ();
 	}
+    
+    private function buildForm ()
+    {
+    	if ($this->formCode != NULL)
+    		return $this->formCode;
+    	
+    	// Build form
+    	$elements = "";
+    	
+    	foreach ($this->data as $d)
+    	{
+    		$elements .= $this->buildElement ($d);
+    	}
+   		
+   		return $GLOBALS['fw_template']::loadFile ("Form/form.html", array (
+   				"action" => $this->action,
+   				"encoding" => $this->encoding,
+   				"method" => $this->method,
+   				"content" => $elements
+   			));
+   	}
+    private function buildElement ($e)
+    {
+    	switch (strtolower ($e["type"]))
+    	{
+    		case "input":
+    		case "password":
+    		case "file":
+    		case "radio":
+    		case "checkbox":
+    		case "hidden":
+    		case "button":
+    		case "submit":
+    		case "reset":
+    			return $this->buildInput ($e, strtolower($e["type"]));
+    		case "header":
+    			return $this->buildHeader ($e);
+    		case "headerend":
+    			return $this->buildHeader ($e, true);
+    		case "custom":
+    			return $this->buildCustom ($e);
+    		default:
+    			return false;
+    	}
+    }
+    private function buildInput ($e, $type="input")
+    {
+    	return $GLOBALS['fw_template']::loadFile ('Form/input.html', array (
+    			"label" => isset ($e['label']) ? $e['label'] : "",
+    			"value" => isset ($e['value']) ? " value=\"{$e['value']}\"" : "",
+    			"name" => isset ($e['name']) ? " name=\"{$e['name']}\"" : "",
+    			"id" => isset ($e['id']) && strlen ($e['id']) > 0 ? " id=\"{$e['id']}\"" : "",
+    			"type" => $type
+    		));
+    }
+    private function buildHeader ($e, $end = false)
+    {
+    	$legend = isset($e['legend']) ? $e['legend'] : NULL;
+    	if ($legend == NULL && !$end) return NULL;
+    	
+    	if ($end)
+    		return $GLOBALS['fw_template']->loadFile ("Form/header_end.html");
+    	
+    	return $GLOBALS['fw_template']::loadFile ("Form/header.html", array (
+    			"legend" => $legend
+    		));
+    }
+    private function buildCustom ($e)
+    {
+    	if (!isset($e['content']))
+    		return "";
+    	
+    	return $GLOBALS['fw_template']::loadFile ("Form/customInput.html", array(
+    			"label" => isset($e['label']) && $e['label'] != "" ? $e['label'] : "No label",
+    			"content" => $e['content']
+    		));
+    }
 }
