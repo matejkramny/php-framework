@@ -37,7 +37,7 @@ final class Form
 	 *  - submit { value (string) }
 	 *  - reset { value (string) }
 	 *  - header { legend (string) }
-	 *  - headerend { }
+	 *  - headerend
 	 *	- custom { content (string) }
 	 */
     public function Form ($a)
@@ -63,11 +63,12 @@ final class Form
     private $valid;
 	private $addedScriptsToTemplate;
     private $formCode;
+    private $validCode;
     
     private function setMethod ($method)
     {
         $m = strtoupper ($method);
-        if ($m != "POST" || $m != "GET")
+        if ($m != "POST" && $m != "GET")
             $m = "POST";
 
         $this->method = $m;
@@ -87,7 +88,12 @@ final class Form
             return $this->submitted;
 
         // Check if form is submitted
+        $method = $this->method == "POST" ? $_POST : $_GET;
         
+        if (isset($method["submitted"]))
+        	$this->submitted = true;
+        
+        return $this->submitted;
    	}
    	
     public function formValid ()
@@ -110,7 +116,8 @@ final class Form
         if (!$this->formSubmitted ())
         	return false;
         
-        
+        // First find ['valid'] code in form, check it against database
+        // Then validate other form elements.
     }
     public function getCode ()
     {
@@ -136,16 +143,28 @@ final class Form
     	$elements = "";
     	
     	foreach ($this->data as $d)
-    	{
     		$elements .= $this->buildElement ($d);
-    	}
    		
-   		return $GLOBALS['fw_template']::loadFile ("Form/form.html", array (
+   		// Add some security and submission check flag into the data array
+    	$elements .= $this->buildELement(array(
+    		"type" => 'hidden',
+    		'value' => true,
+    		'name' => 'submitted'
+    	));
+    	$elements .= $this->buildElement(array(
+    		"type" => 'hidden',
+    		'value' => $this->getValidCodeForForm (),
+    		'name' => 'valid'
+    	));
+   			
+   		$this->formCode = $GLOBALS['fw_template']::loadFile ("Form/form.html", array (
    				"action" => $this->action,
    				"encoding" => $this->encoding,
    				"method" => $this->method,
    				"content" => $elements
    			));
+   		
+   		return $this->formCode;
    	}
     private function buildElement ($e)
     {
@@ -202,5 +221,19 @@ final class Form
     			"label" => isset($e['label']) && $e['label'] != "" ? $e['label'] : "No label",
     			"content" => $e['content']
     		));
+    }
+    private function getValidCodeForForm ()
+    {
+    	if ($this->validCode != NULL)
+    		return $this->validCode;
+    	
+    	$r = str_shuffle(base64_encode(mt_rand()));
+    	DB::insert ("forms", array (
+    		"code" => $r
+    	));
+    	
+    	$this->validCode = $r;
+    	
+    	return $r;
     }
 }

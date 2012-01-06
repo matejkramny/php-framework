@@ -71,7 +71,7 @@ abstract class Database
  * $options to be specified as array
  * array may contain:
  * 'fields' [type array] (if not in $options then all fields are selected),
- * 'where'[type array],
+ * 'where'[type array || string],
  * 'sort'[type array],
  * 'limit' [type array]
  * 
@@ -127,7 +127,7 @@ final class DB extends Database {
 
     public static function insert($table, $values) {
         $build = "INSERT INTO {$table} SET " . self::expandArray($values, true);
-		echo $build;
+        
         $oDb = self::query($build);
         return $oDb;
     }
@@ -220,7 +220,9 @@ final class DB extends Database {
         $build .= " FROM {$table}";
 
         if (isset($options['where']))
-            $build .= " WHERE " . self::expandArray($options['where'], true, false, isset($options['where']['__comma']) ? $options['where']['__comma'] : true);
+            $build .= " WHERE " . is_array($options['where']) ? 
+            						self::expandArray($options['where'], true, false, isset($options['where']['__comma']) ? 
+            							$options['where']['__comma'] : true) : $options['where'];
 
         if (isset($options['sort']))
             $build .= " ORDER BY " . self::expandArray($options['sort'], true, true);

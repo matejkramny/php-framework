@@ -5,6 +5,7 @@ final class Template extends TemplateBase
 	function haveFun ()
 	{
 		$opt = array(
+			'method' => 'GET',
 			'data' => array(
 				'formHeader' => array(
 					'type' => 'header',
