@@ -1,7 +1,7 @@
 <?php
 
 // Define URL constants
-define('fw_root', 			dirname($_SERVER['SCRIPT_FILENAME']) . '/');		// absolute server path
+define('fw_root', 			realpath(dirname(__FILE__)) . '/');		// absolute server path
 define('fw_URI',		 	dirname($_SERVER['PHP_SELF']) . '/',  true);		// browser-friendly path
 
 // include path is set to abs. server path
@@ -42,20 +42,3 @@ $template_helper = new TemplateHelper ($user == null ? fw_settings_template : $u
 // Template class is in $GLOBALS['fw_template'] variable
 
 $GLOBALS['fw_template']->haveFun();
-
-$dat = array (
-		'action' => "http://www.google.com/",
-		'method' => "ppoost",
-		'enctype' => "multipart/form-data",
-		'data' => array (
-			'username' => array (
-				'type' => 'input',
-				'required' => true,
-				'value' => "Username: ",
-				'name' => "username"
-				)
-			)
-	     );
-
-$form = new Form ($dat);
-

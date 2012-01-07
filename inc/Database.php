@@ -34,7 +34,7 @@ abstract class Database
 		if(defined("fw_mysql_host") && defined("fw_mysql_socket")){
 			if(fw_mysql_socket != NULL)
 			{
-				return fw_mysql_socket;
+				return ':'.fw_mysql_socket;
 			}
 			else
 			{

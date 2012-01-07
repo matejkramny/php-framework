@@ -4,7 +4,7 @@
 define("fw_mysql_user", "root");
 define("fw_mysql_password", "root");
 define("fw_mysql_host", "localhost");
-define("fw_mysql_socket", "");
+define("fw_mysql_socket", "/tmp/mysql.sock");
 define("fw_mysql_port", 3306);
 define("fw_mysql_database", "framework");
 define("fw_mysql_table_prefix", "");
@@ -27,6 +27,9 @@ define("fw_dir_templates", "templates/");
 @ini_set("display_errors", "On");
 @ini_set("error_log", fw_root.fw_dir_logs."error.log");
 @ini_set("log_errors", "On");
+
+// Set up timezone
+date_default_timezone_set("Europe/London");
 
 // instantiate Database class & make a new MySQL connection
 require_once(fw_dir_inc."Database.php");
