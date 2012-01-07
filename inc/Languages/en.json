@@ -1,5 +1,6 @@
 {
 	"language_code": "en",
 	"language_name": "English",
-	"footer": "Site scripting by <a href=\"http://matej.me\">Matej Kramny</a>"
+	"footer": "Site scripting by <a href=\"http://matej.me\">Matej Kramny</a>",
+	"form_field_required": "Field required"
 }

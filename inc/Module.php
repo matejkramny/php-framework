@@ -19,6 +19,8 @@ final class Form
 	 *             'type' => 'datatype',
 	 *             'label' => 'the information before the input, like "Username:"',
 	 *             'name' => 'name of the element, to be accessed as $_GET/POST["yournameofelement"]',
+	 *			   'tooltip' => 'some text displayed in tooltip',
+	 *			   'tooltipColour' => 'red' / 'green' / 'black' (default)
 	 *			   'id' => 'the id of the element, accessible by javascript'
 	 *             // more optional parameters based on the 'type'
 	 *         )
@@ -27,11 +29,11 @@ final class Form
 	 *
 	 * Data types:
 	 * 	- datatype { // some relevant parameters (value type, like string, bool) }
-	 * 	- input { required (bool), value (string), validator (array ( length (int), regex (string), error (string) )) }
-	 *	- password { required (bool), value (string), validator (array ( length (int), regex (string), error (string) )) }
+	 * 	- input { required (bool), value (string), validator (array ( type (string), min (int), max (int), regex (string), error (string) )) }
+	 *	- password { required (bool), value (string), validator (array ( type (string), min (int), max (int), regex (string), error (string) )) }
 	 *	- file { required (bool), location (string) }
 	 *	- radio { required (bool) }
-	 *	- checkbox { required (bool) }
+	 *	- checkbox { required (bool), checked (bool) }
 	 *  - hidden { value (string) }
 	 *  - button { value (string) }
 	 *  - submit { value (string) }
@@ -40,6 +42,7 @@ final class Form
 	 *  - headerend
 	 *	- custom { content (string) }
 	 */
+	
     public function Form ($a)
     {
         $this->action = isset ($a['action']) ? $a['action'] : "";
@@ -116,8 +119,92 @@ final class Form
         if (!$this->formSubmitted ())
         	return false;
         
-        // First find ['valid'] code in form, check it against database
-        // Then validate other form elements.
+        $m = $this->method == "POST" ? $_POST : $_GET;
+       	
+        $valid = isset ($m['valid']) ? $m['valid'] : NULL;
+        if ($valid == NULL)
+        	return false;
+        
+        $oDb = DB::getRow ("forms", array ("where" => array ("code" => $valid)));
+        if ($oDb == NULL)
+        	return false;
+    	
+    	// Validate form elements
+    	$vData = $this->validate ($m, $this->data);
+    	
+    	// Rebuild form data
+    	$this->formCode = NULL;
+    	$this->buildForm();
+    }
+    private function validate ($received, $local)
+    {
+    	// Validates local data against remote, and modifies $this->data accordingly
+    	foreach ($local as $localKey => $localValue)
+    	{
+    		if (!isset ($localValue["name"])) continue;
+    		$required = isset ($localValue["required"]) ? $localValue["required"] : false;
+    		
+    		$receivedValue = isset ($received[$localValue["name"]]) ? $received[$localValue["name"]] : NULL;
+    		
+    		if (strtolower($localValue["type"]) == "checkbox")
+    		{
+    			// Checked
+    			$this->data[$localKey]["checked"] = true;
+    			
+				// Unchecked
+    			if ($receivedValue === NULL)
+    				$this->data[$localKey]["checked"] = false;
+    			
+    			if ($required && $receivedValue === NULL)
+    			{
+    				// It is supposed to be checked
+    				$this->data[$localKey]["tooltip"] = _t ("form_field_required");
+    				$this->data[$localKey]["tooltipColour"] = "red";
+    			}
+    			
+    			continue;
+    		}
+			else if (strtolower($localValue["type"]) == "radio")
+			{
+				// Not submitted / checked any radio button
+				if ($required && $receivedValue === NULL)
+				{
+					$this->data[$localKey]["tooltip"] = _t ("form_field_required");
+					$this->data[$localKey]["tooltipColour"] = "red";
+					$this->data[$localKey]["checked"] = false;
+					
+					continue;
+				}
+				
+				// Submitted, but not this radio
+				if ($receivedValue != $localValue["value"])
+				{
+					$this->data[$localKey]["tooltip"] = "";
+					$this->data[$localKey]["checked"] = false;
+				}
+				else
+				{
+					$this->data[$localKey]["tooltip"] = "";
+					$this->data[$localKey]["checked"] = true;
+				}
+				
+				continue;
+			}
+    		
+    		$this->data[$localKey]["value"] = $receivedValue;
+    		
+    		// Required flag evaluation
+    		if ($required && ($receivedValue === NULL || strlen($receivedValue) == 0))
+    		{
+    			$this->data[$localKey]["tooltip"] = _t ("form_field_required");
+    			$this->data[$localKey]["tooltipColour"] = "red";
+    			$this->data[$localKey]["value"] = "";
+    		}
+    		else if (isset ($localValue["validator"]))
+    		{
+    			// Parse Validator array
+    		}
+    	}
     }
     public function getCode ()
     {
@@ -146,7 +233,7 @@ final class Form
     		$elements .= $this->buildElement ($d);
    		
    		// Add some security and submission check flag into the data array
-    	$elements .= $this->buildELement(array(
+    	$elements .= $this->buildElement(array(
     		"type" => 'hidden',
     		'value' => true,
     		'name' => 'submitted'
@@ -166,9 +253,9 @@ final class Form
    		
    		return $this->formCode;
    	}
-    private function buildElement ($e)
-    {
-    	switch (strtolower ($e["type"]))
+   	private function submittableElementType ($type)
+   	{
+   		switch (strtolower ($type))
     	{
     		case "input":
     		case "password":
@@ -176,10 +263,32 @@ final class Form
     		case "radio":
     		case "checkbox":
     		case "hidden":
+			case "custom":
+    			return true;
+    		case "button":
+    		case "submit":
+    		case "reset":
+    		case "header":
+    		case "headerend":
+    		default:
+    			return false;
+    	}
+   	}
+    private function buildElement ($e)
+    {
+    	switch (strtolower ($e["type"]))
+    	{
+    		case "input":
+    		case "password":
+    		case "file":
+    		case "hidden":
     		case "button":
     		case "submit":
     		case "reset":
     			return $this->buildInput ($e, strtolower($e["type"]));
+    		case "checkbox":
+			case "radio":
+    			return $this->buildRadioCheckbox ($e, strtolower($e["type"]));
     		case "header":
     			return $this->buildHeader ($e);
     		case "headerend":
@@ -192,13 +301,48 @@ final class Form
     }
     private function buildInput ($e, $type="input")
     {
+    	$tooltip = "";
+    	$tooltipColour = "black";
+    	
+    	if (isset($e['tooltip']))
+    		$tooltip = $GLOBALS['fw_template']::loadFile ('Tooltip/tooltip.html', array (
+    			'text' => $e['tooltip']
+    		));
+    	if (isset($e['tooltipColour']))
+    		$tooltipColour = $GLOBALS['fw_template']::getTooltipColour ($e['tooltipColour']);
+    	
     	return $GLOBALS['fw_template']::loadFile ('Form/input.html', array (
     			"label" => isset ($e['label']) ? $e['label'] : "",
     			"value" => isset ($e['value']) ? " value=\"{$e['value']}\"" : "",
     			"name" => isset ($e['name']) ? " name=\"{$e['name']}\"" : "",
     			"id" => isset ($e['id']) && strlen ($e['id']) > 0 ? " id=\"{$e['id']}\"" : "",
+    			"tooltip" => $tooltip,
+    			"tooltipColour" => $tooltipColour,
     			"type" => $type
     		));
+    }
+    private function buildRadioCheckbox ($e, $type)
+    {
+    	$tooltip = "";
+    	$tooltipColour = "black";
+    	
+    	if (isset($e['tooltip']))
+    		$tooltip = $GLOBALS['fw_template']::loadFile ('Tooltip/tooltip.html', array (
+    			'text' => $e['tooltip']
+    		));
+    	if (isset($e['tooltipColour']))
+    		$tooltipColour = $GLOBALS['fw_template']::getTooltipColour ($e['tooltipColour']);
+    	
+    	return $GLOBALS['fw_template']::loadFile ('Form/checkedInput.html', array (
+    			"label" => isset ($e['label']) ? $e['label'] : "",
+    			"name" => isset ($e['name']) ? " name=\"{$e['name']}\"" : "",
+    			"id" => isset ($e['id']) && strlen ($e['id']) > 0 ? " id=\"{$e['id']}\"" : "",
+    			"tooltip" => $tooltip,
+    			"tooltipColour" => $tooltipColour,
+    			"checked" => isset ($e['checked']) && $e['checked'] == true ? "checked=\"yes\"" : "",
+				"type" => $type,
+				"value" => isset ($e["value"]) ? " value=\"{$e['value']}\"" : ""
+		));
     }
     private function buildHeader ($e, $end = false)
     {
@@ -229,7 +373,8 @@ final class Form
     	
     	$r = str_shuffle(base64_encode(mt_rand()));
     	DB::insert ("forms", array (
-    		"code" => $r
+    		"code" => $r,
+    		"timestamp" => time()
     	));
     	
     	$this->validCode = $r;

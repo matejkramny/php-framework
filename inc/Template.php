@@ -156,6 +156,18 @@ abstract class TemplateBase {
     	trigger_error("Template file does not exist: {$fileName}");
     	return null;
     }
+    
+    public static function getTooltipColour ($rawColour)
+    {
+    	$colours = json_decode(self::loadFile ('Tooltip/colours.json'));
+		foreach ($colours as $k => $v)
+		{
+			if ($k == $rawColour)
+				return $v;
+		}
+		
+		return NULL;
+    }
 }
 
 class TemplateHelper

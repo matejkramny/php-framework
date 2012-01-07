@@ -5,7 +5,7 @@ final class Template extends TemplateBase
 	function haveFun ()
 	{
 		$opt = array(
-			'method' => 'GET',
+			'method' => 'POST',
 			'data' => array(
 				'formHeader' => array(
 					'type' => 'header',
@@ -15,12 +15,13 @@ final class Template extends TemplateBase
 					'type' => 'input',
 					'label' => 'Username:',
 					'name' => 'username',
+					'tooltip' => 'obtained during registration.',
 					'required' => true,
 					'validator' => array(
 						'type' => 'length',
 						'min' => 4,
 						'max' => 20,
-						'error' => 'Username must be between 4 and 20 characters!'
+						'error' => 'must be between 4 and 20 characters!'
 					)
 				),
 				'pword' => array(
@@ -37,12 +38,22 @@ final class Template extends TemplateBase
 				'male' => array(
 					'type' => 'radio',
 					'label' => 'Male:',
-					'name' => 'gender'
+					'name' => 'gender',
+					'value' => 'male',
+					'required' => true
 				),
 				'female' => array(
 					'type' => 'radio',
 					'label' => 'Female:',
-					'name' => 'gender'
+					'name' => 'gender',
+					'required' => true,
+					'value' => 'female'
+				),
+				'terms' => array(
+					'type' => 'checkbox',
+					'label' => 'I agree to the terms and conditions:',
+					'required' => true,
+					'name' => 'terms'
 				),
 				'submit' => array(
 					'type' => 'submit',

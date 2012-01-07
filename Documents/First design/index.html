@@ -6,6 +6,7 @@
         <link rel="stylesheet" media="all" href="reset.css">
         <link rel="stylesheet" media="all" href="index.css">
         <link rel="stylesheet" media="all" href="jqtransform.css">
+        <link rel="stylesheet" media="all" href="tooltip.css">
 	</head>
 	
 	<body>
@@ -37,13 +38,12 @@
                 <div style="clear:both"></div>
 				<div id="cont_left"></div>
 				<div id="cont_content">
-                	<h1>Hello world!</h1>
-                    <br />
                     <p>
-                    	<form>
-                    		<label class="leftLabel">Username: </label><input type="text" id="test_text"><br />
-                    		<label class="leftLabel">Password: </label><input type="text" id="test_text"><br />
+                    	<form class="the-tooltip bottom left sienna">
+                    		<label class="leftLabel the-tooltip top left apple-green">Username: <span>Correct!</span></label><input type="text" id="test_text"><br />
+                    		<label class="leftLabel the-tooltip top left black">Password: <span>Neutral</span></label><input type="text" id="test_text"><br />
                         	<input type="button" id="test_button" value="Test button">
+                        	<span>Form invalid!<br /><br />Hover over form labels to see which are incorrect.</span>
                         </form>
                     </p>
                 </div>
@@ -54,7 +54,6 @@
 				<div id="cont_bottom_right"></div>
         	</div>
         </div>
-	</body>
     
     <!-- Scripts not to affect load of other documents -->
     <script type="text/javascript" language="javascript">
@@ -62,7 +61,11 @@
 		var sliderOrigin = sliderAt = "nav_faq";
     </script>
     <script type="text/javascript" language="javascript" src="jquery.js"></script>
-    <script type="text/javascript" language="javascript" src="jquery_ui.js"></script>
-    <script type="text/javascript" language="javascript" src="jquery.jqtransform.js"></script>
+    <!--[if (gte IE 6)&(lte IE 8)]>
+		<script defer src="//s3.amazonaws.com/nwapi/nwmatcher/nwmatcher-1.2.4-min.js"></script>
+		<script defer src="selectivizr.js"></script>
+	<![endif]-->
+    <script type="text/javascript" language="javascript" src="jquery.tools.js"></script>
     <script type="text/javascript" language="javascript" src="index.js"></script>
+	</body>
 </html>
