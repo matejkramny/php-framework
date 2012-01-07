@@ -89,7 +89,7 @@ final class DB extends Database {
 
     public static function getRow($table, $options=array()) {
         $build = self::buildSelectSQL($table, $options);
-
+		
         $oDb = self::query($build);
         
         if ($oDb && mysql_num_rows($oDb) > 0)
@@ -220,9 +220,12 @@ final class DB extends Database {
         $build .= " FROM {$table}";
 
         if (isset($options['where']))
-            $build .= " WHERE " . is_array($options['where']) ? 
-            						self::expandArray($options['where'], true, false, isset($options['where']['__comma']) ? 
-            							$options['where']['__comma'] : true) : $options['where'];
+        {
+        	if (is_array($options['where']))
+        		$build .= " WHERE " . self::expandArray($options['where'], true, false, isset($options['where']['__comma']) ? $options['where']['__comma'] : true);
+        	else
+        		$build .= " WHERE " . $options['where'];
+        }
 
         if (isset($options['sort']))
             $build .= " ORDER BY " . self::expandArray($options['sort'], true, true);
