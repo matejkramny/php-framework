@@ -6,6 +6,7 @@ final class Template extends TemplateBase
 	{
 		$opt = array(
 			'method' => 'POST',
+			'table' => 'testTable',
 			'data' => array(
 				'formHeader' => array(
 					'type' => 'header',
@@ -64,7 +65,13 @@ final class Template extends TemplateBase
 				),
 			)
 		);
-		$form = new Form ($opt);
+		
+		$form = new Form ($opt, DB::getRow ("testTable", array ("where" => "id=3")));
+		
+		if ($form->formSubmittedAndValid ())
+		{
+			$form->updateDataInDatabase (3);
+		}
 		
 		echo parent::loadFile ("skeleton.html", array (
 			'PAGE_TITLE' => "My Page TITLE",

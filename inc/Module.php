@@ -14,8 +14,9 @@ final class Form
 	 *     'action' => 'some url', // optional, default is the same page
 	 *     'method' => 'post or get', // optional, default is POST
 	 *     'enctype' => 'encoding type', // optional
+	 *		'table' => '', // optional, mysql table to save data into
 	 *     'data' => array ( // required
-	 *         'somelabel' => array (
+	 *         'somelabel' => array ( // somelabel should be equal to a database record
 	 *             'type' => 'datatype',
 	 *             'label' => 'the information before the input, like "Username:"',
 	 *             'name' => 'name of the element, to be accessed as $_GET/POST["yournameofelement"]',
@@ -43,19 +44,20 @@ final class Form
 	 *	- custom { content (string) }
 	 */
 	
-    public function Form ($a)
+    public function Form ($a, $existing = NULL)
     {
         $this->action = isset ($a['action']) ? $a['action'] : "";
         $this->setMethod (isset ($a['method']) ? $a['method'] : "POST");
         $this->setEncoding (isset ($a['enctype']) ? $a['enctype'] : NULL);
         $this->data = $a['data'];
-
-        if (!$this->formSubmitted ())
-            $this->buildForm ();
-        else
-        {
+        $this->table = isset ($a['table']) ? $a['table'] : "";
+		$this->databaseRecord = is_array($existing) ? $existing : NULL;
+		
+		$this->applyDatabaseRecord ();
+		$this->buildForm ();
+		
+        if ($this->formSubmitted ())
             $this->validateForm ();
-        }
     }
 
     private $action;
@@ -63,10 +65,13 @@ final class Form
     private $encoding;
     private $data;
     private $submitted;
-    private $valid;
+	private $valid;
 	private $addedScriptsToTemplate;
     private $formCode;
     private $validCode;
+	private $table;
+	private $receivedData;
+	private $databaseRecord;
     
     private function setMethod ($method)
     {
@@ -102,7 +107,7 @@ final class Form
     public function formValid ()
     {
         if ($this->valid == NULL)
-            $this->valid = validateForm ();
+            $this->valid = $this->validateForm ();
 
         return $this->valid;
     }
@@ -122,23 +127,33 @@ final class Form
         $m = $this->method == "POST" ? $_POST : $_GET;
        	
         $valid = isset ($m['valid']) ? $m['valid'] : NULL;
-        if ($valid == NULL)
+        if ($valid === NULL)
         	return false;
         
         $oDb = DB::getRow ("forms", array ("where" => array ("code" => $valid)));
-        if ($oDb == NULL)
+        if ($oDb === NULL)
         	return false;
     	
+    	// Unset values from remote
+    	unset($m["valid"], $m["submitted"]);
+    	
     	// Validate form elements
-    	$vData = $this->validate ($m, $this->data);
+    	$valid = $this->validate ($m, $this->data);
+    	
+    	if ($valid)
+    		$this->receivedData = $m;
     	
     	// Rebuild form data
     	$this->formCode = NULL;
     	$this->buildForm();
+    	
+    	return $valid;
     }
     private function validate ($received, $local)
     {
     	// Validates local data against remote, and modifies $this->data accordingly
+    	
+    	$valid = true;
     	foreach ($local as $localKey => $localValue)
     	{
     		if (!isset ($localValue["name"])) continue;
@@ -160,6 +175,8 @@ final class Form
     				// It is supposed to be checked
     				$this->data[$localKey]["tooltip"] = _t ("form_field_required");
     				$this->data[$localKey]["tooltipColour"] = "red";
+    				
+    				$valid = false;
     			}
     			
     			continue;
@@ -173,6 +190,7 @@ final class Form
 					$this->data[$localKey]["tooltipColour"] = "red";
 					$this->data[$localKey]["checked"] = false;
 					
+					$valid = false;
 					continue;
 				}
 				
@@ -199,13 +217,81 @@ final class Form
     			$this->data[$localKey]["tooltip"] = _t ("form_field_required");
     			$this->data[$localKey]["tooltipColour"] = "red";
     			$this->data[$localKey]["value"] = "";
+    			
+    			$valid = false;
     		}
     		else if (isset ($localValue["validator"]))
     		{
     			// Parse Validator array
     		}
     	}
+    	
+    	return $valid;
     }
+    public function getData ()
+    {
+    	// Returns submittable and validated / parsed data in form of:
+    	// array (
+    	// 		"key" => "value"
+    	// );
+    	
+    	$r = array();
+    	
+    	foreach ($this->data as $k => $v)
+    	{
+    		if (!$this->submittableElementType ($v["type"]))
+    			continue;
+    		
+    		if (!isset ($v["name"]))
+    			continue; // not submitted/able element
+    		
+    		$r[$v["name"]] = isset ($this->receivedData[$v["name"]]) ? $this->receivedData[$v["name"]] : "";
+    	}
+    	
+    	return $r;
+    }
+	public function insertDataToDatabase ($additionalData = NULL, $table = NULL)
+	{
+		// Saves received data into the database table
+		
+		$d = $this->getData ();
+		$aData = is_array($additionalData) ? $additionalData : array ();
+		$t = NULL;
+		
+		if ($this->table === NULL && $table === NULL)
+			return false; // Cannot save data, no table specified
+		
+		// $table is higher priority than $this->table
+		$t = $table;
+		if ($table === NULL)
+			$t = $this->table;
+		
+		$d = array_merge($d, $aData);
+		
+		return DB::insert ($t, $d);
+	}
+	public function updateDataInDatabase ($id ,$table = NULL)
+	{
+		// Updates the database record in database
+		
+		$d = $this->getData ();
+		$t = NULL;
+		
+		if ($this->table === NULL && $table === NULL)
+			return false; // Cannot save data, no table specified
+		
+		// $table is higher priority than $this->table
+		$t = $table;
+		if ($table === NULL)
+			$t = $this->table;
+		
+		return DB::update ($t, array (
+			'fields' => $d,
+			'where' => array (
+				'id' => $id
+			)
+		));
+	}
     public function getCode ()
     {
         // Get the HTML out
@@ -221,9 +307,43 @@ final class Form
 		return $this->buildForm ();
 	}
     
+    private function applyDatabaseRecord ()
+    {
+    	if ($this->databaseRecord === NULL)
+    		return;
+    	
+    	foreach ($this->data as $k => $v)
+    	{
+    		if (!isset ($v["name"])) continue;
+    		if (!isset ($this->databaseRecord[$v["name"]])) continue;
+			
+    		$dbV = $this->databaseRecord[$v["name"]];
+    		
+    		if ($v["type"] == "radio")
+    		{
+    			if ($dbV == $v["value"])
+    				$this->data[$k]["checked"] = true;
+    			else
+    				$this->data[$k]["checked"] = false;
+    			
+    			continue;
+    		}
+    		else if ($v["type"] == "checkbox")
+    		{
+    			if ($dbV == "on")
+    				$this->data[$k]["checked"] = true;
+    			else
+    				$this->data[$k]["checked"] = false;
+    			
+    			continue;
+    		}
+    		
+    		$this->data[$k]["value"] = $dbV;
+    	}
+    }
     private function buildForm ()
     {
-    	if ($this->formCode != NULL)
+    	if ($this->formCode !== NULL)
     		return $this->formCode;
     	
     	// Build form
