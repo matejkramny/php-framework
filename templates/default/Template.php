@@ -50,6 +50,22 @@ final class Template extends TemplateBase
 					'required' => true,
 					'value' => 'female'
 				),
+				'picture' => array (
+					'type' => 'file',
+					'label' => 'Your picture:',
+					'name' => 'picture',
+					'required' => true,
+					'location' => fw_dir_temp,
+					'fileName' => 'up_picture_'.time (),
+					'maxFileSize' => 4096,
+					'extensions' => array (
+						'png',
+						'jpg',
+						'jpeg',
+						'gif',
+						'bmp'
+					)
+				),
 				'terms' => array(
 					'type' => 'checkbox',
 					'label' => 'I agree to the terms and conditions:',
@@ -66,11 +82,11 @@ final class Template extends TemplateBase
 			)
 		);
 		
-		$form = new Form ($opt, DB::getRow ("testTable", array ("where" => "id=3")));
+		$form = new Form ($opt);
 		
 		if ($form->formSubmittedAndValid ())
 		{
-			$form->updateDataInDatabase (3);
+			$form->insertDataToDatabase ();
 		}
 		
 		echo parent::loadFile ("skeleton.html", array (

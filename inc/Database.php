@@ -86,6 +86,11 @@ final class DB extends Database {
     public static function query($query) {
         return mysql_query($query, fw_mysql);
     }
+    
+    public static function last_insert_id ()
+    {
+    	return mysql_insert_id(fw_mysql);
+    }
 
     public static function getRow($table, $options=array()) {
         $build = self::buildSelectSQL($table, $options);

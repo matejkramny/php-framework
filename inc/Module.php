@@ -14,7 +14,7 @@ final class Form
 	 *     'action' => 'some url', // optional, default is the same page
 	 *     'method' => 'post or get', // optional, default is POST
 	 *     'enctype' => 'encoding type', // optional
-	 *		'table' => '', // optional, mysql table to save data into
+	 *	   'table' => '', // optional, mysql table to save data into
 	 *     'data' => array ( // required
 	 *         'somelabel' => array ( // somelabel should be equal to a database record
 	 *             'type' => 'datatype',
@@ -32,7 +32,7 @@ final class Form
 	 * 	- datatype { // some relevant parameters (value type, like string, bool) }
 	 * 	- input { required (bool), value (string), validator (array ( type (string), min (int), max (int), regex (string), error (string) )) }
 	 *	- password { required (bool), value (string), validator (array ( type (string), min (int), max (int), regex (string), error (string) )) }
-	 *	- file { required (bool), location (string) }
+	 *	- file { required (bool), location (string), filename (string), maxFileSize (int) } // filename is optional, but will be automatically generated if not present, maxFileSize is also optional, needs to be in kilobytes. Default limit is 4096 kilobytes (4MB)
 	 *	- radio { required (bool) }
 	 *	- checkbox { required (bool), checked (bool) }
 	 *  - hidden { value (string) }
@@ -48,8 +48,8 @@ final class Form
     {
         $this->action = isset ($a['action']) ? $a['action'] : "";
         $this->setMethod (isset ($a['method']) ? $a['method'] : "POST");
-        $this->setEncoding (isset ($a['enctype']) ? $a['enctype'] : NULL);
         $this->data = $a['data'];
+        $this->setEncoding (isset ($a['enctype']) ? $a['enctype'] : NULL);
         $this->table = isset ($a['table']) ? $a['table'] : "";
 		$this->databaseRecord = is_array($existing) ? $existing : NULL;
 		
@@ -84,9 +84,25 @@ final class Form
     private function setEncoding ($encoding)
     {
         // Only two encoding types can be accepted, if NULL (undefined) or not equal to multipart/form-data, a default enctype is set
-        if ($encoding == NULL || strtolower($encoding) != "multipart/form-data")
+        // If a file upload element is present in form, multipart/form-data is chosen automatically
+        // Custom choice encoding is present for custom elements, which can be file uploads too
+        
+		$fileUploadForm = false;
+		foreach ($this->data as $k => $v)
+		{
+			if ($v["type"] == "file")
+			{
+				$fileUploadForm = true;
+				break;
+			}
+		}
+		
+		if ($encoding == NULL || strtolower($encoding) != "multipart/form-data")
             $encoding = "application/x-www-form-urlencoded";
-
+		
+		if ($fileUploadForm)
+			$encoding = "multipart/form-data";
+		
         $this->encoding = $encoding;
     }
     public function formSubmitted ()
@@ -137,11 +153,10 @@ final class Form
     	// Unset values from remote
     	unset($m["valid"], $m["submitted"]);
     	
-    	// Validate form elements
-    	$valid = $this->validate ($m, $this->data);
+    	$this->receivedData = $m;
     	
-    	if ($valid)
-    		$this->receivedData = $m;
+    	// Validate form elements
+    	$this->valid = $valid = $this->validate ($m, $this->data);
     	
     	// Rebuild form data
     	$this->formCode = NULL;
@@ -208,6 +223,78 @@ final class Form
 				
 				continue;
 			}
+			else if (strtolower($localValue["type"] == "file"))
+			{
+				// File upload
+				if (!isset($localValue["name"])) continue;
+				$required = isset ($localValue["required"]) ? $localValue["required"] : false;
+				
+				if (!is_uploaded_file($_FILES[$localValue["name"]]["tmp_name"]))
+				{
+					if ($required)
+					{
+						// Required and not present
+						$this->data[$localKey]["tooltipColour"] = "red";
+						$this->data[$localKey]["tooltip"] = _t ("form_field_required");
+					
+						$valid = false;
+					}
+					
+					continue;
+				}
+				if (is_array($_FILES[$localValue["name"]]["name"])) continue; // Multiple upload under same name
+				
+				$destination = isset ($localValue["location"]) ? $localValue["location"] : fw_dir_temp;
+				$fileName = isset ($localValue["fileName"]) ? $localValue["fileName"] : "upload_".time();
+				$maxFileSize = isset ($localValue["maxFileSize"]) ? $localValue["maxFileSize"] : fw_settings_upload_file_size;
+				
+				// get info about the file
+				$oPrep = $this->prepareFileUpload ($_FILES[$localValue["name"]], $destination);
+				
+				if (!$oPrep["writeableDirectory"])
+				{
+					$this->data[$localKey]["tooltipColour"] = "red";
+					$this->data[$localKey]["tooltip"] = _t ("file_upload_server_error");
+					
+					$valid = false;
+					continue;
+				}
+				
+				if (isset ($localValue["extensions"]) && !in_array($oPrep["extension"], $localValue["extensions"]))
+				{
+					$this->data[$localKey]["tooltipColour"] = "red";
+					$this->data[$localKey]["tooltip"] = _t ("file_upload_not_allowed_extension");
+					
+					$valid = false;
+					continue;
+				}
+				
+				if ($oPrep["file_size"] >= $maxFileSize)
+				{
+					$this->data[$localKey]["tooltipColour"] = "red";
+					$this->data[$localKey]["tooltip"] = _t ("file_upload_over_size");
+					
+					$valid = false;
+					continue;
+				}
+				
+				$oPrep["fullPath"] = "{$destination}/{$fileName}.{$oPrep["extension"]}";
+				
+				$this->finishFileUpload ($oPrep);
+				
+				// Add entry to database, store ID of the inserted record.
+				DB::insert ("file_uploads", array (
+					"location" => $destination,
+					"filename" => $fileName,
+					"extension" => $oPrep["extension"],
+					"timestamp" => time()
+				));
+				
+				// Inject receivedData record to track the file
+				$this->receivedData[$localValue["name"]] = DB::last_insert_id ();
+				
+				continue;
+			}
     		
     		$this->data[$localKey]["value"] = $receivedValue;
     		
@@ -227,6 +314,23 @@ final class Form
     	}
     	
     	return $valid;
+    }
+    private function prepareFileUpload ($f, $destination)
+    {
+    	// Return information about a file upload
+    	return array (
+    		"temporary_path" => $f["tmp_name"],
+    		"file_name" => $f["name"],
+    		"extension" => substr($f["name"], strrpos($f["name"],'.')+1, strlen($f["name"])-1),
+    		"file_size" => filesize($f["tmp_name"]) / 1024,
+    		"writeableDirectory" => is_writeable($destination),
+    		"destination" => $destination
+    	);
+    }
+    private function finishFileUpload ($f)
+    {
+    	// Move uploaded file to location specified
+    	move_uploaded_file($f["temporary_path"], $f["fullPath"]);
     }
     public function getData ()
     {

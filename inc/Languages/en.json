@@ -2,5 +2,8 @@
 	"language_code": "en",
 	"language_name": "English",
 	"footer": "Site scripting by <a href=\"http://matej.me\">Matej Kramny</a>",
-	"form_field_required": "Field required"
+	"form_field_required": "Field required",
+	"file_upload_server_error": "Cannot upload file due to server error.",
+	"file_upload_not_allowed_extension": "Disallowed file extension",
+	"file_upload_over_size": "Uploaded file is too large"
 }

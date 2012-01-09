@@ -22,6 +22,7 @@ define("fw_dir_logs", "logs/");
 define("fw_dir_modules", "modules/");
 define("fw_dir_admin", "administration/");
 define("fw_dir_templates", "templates/");
+define("fw_dir_temp", "temp/");
 
 // error reporting & logging
 @ini_set("display_errors", "On");
