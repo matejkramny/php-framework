@@ -6,10 +6,15 @@ abstract class Database
 	
 	public function connect(){
 		// Connect to mysql server
-		$db_connection = mysql_connect(self::getHost(), self::getUsername(), self::getPassword());
+		$db_connection = @mysql_connect(self::getHost(), self::getUsername(), self::getPassword());
 		
 		if(!defined("fw_mysql"))
 			define("fw_mysql", $db_connection);
+		
+		if (!$db_connection)
+			return false;
+		
+		return true;
 	}
 	
 	public static function close($db_link=fw_mysql){
