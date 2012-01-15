@@ -1,0 +1,12 @@
+{
+	"Name": "Test",
+	"Description": "Test module",
+	"ClassPrefix": "Test",
+	"URL": "test",
+	"Install": {
+		"SQL": "install.sql"
+	},
+	"UnInstall": {
+		"SQL": "uninstall.sql"
+	}
+}

@@ -7,11 +7,9 @@ define("fw_mysql_host", "localhost");
 define("fw_mysql_socket", "/tmp/mysql.sock");
 define("fw_mysql_port", 3306);
 define("fw_mysql_database", "framework");
-define("fw_mysql_table_prefix", "");
 
 // mysql database config for administration
 // site mode switchable to front-end & back-end
-define("fw_mysql_admin_table_prefix", "admin_");
 if(!defined("fw_site_mode"))
 	define ("fw_site_mode","user");
 
@@ -20,7 +18,7 @@ define("fw_dir_inc", "inc/");
 define("fw_dir_lib", fw_dir_inc."lib/");
 define("fw_dir_logs", "logs/");
 define("fw_dir_modules", "modules/");
-define("fw_dir_admin", "administration/");
+define("fw_dir_admin", "modules/admin/"); // Directory for admin-specific modules
 define("fw_dir_templates", "templates/");
 define("fw_dir_temp", "temp/");
 
@@ -41,12 +39,10 @@ session_start();
 // instantiate Database class & make a new MySQL connection
 require_once(fw_dir_inc."Database.php");
 $fw_db = new DB;
-$dbConnected = $fw_db->connect();
 
-if (!$dbConnected)
+if (!$fw_db->connect())
 {
 	// Halt
-	
 	// Log
 	trigger_error("MySQL Database not working!", E_USER_WARNING);
 	
@@ -54,7 +50,7 @@ if (!$dbConnected)
 	ob_end_clean();
 	
 	// Send Status 500, Internal Server Error..
-	header('HTTP/1.1 500 Internal Server Error');
+	header('HTTP/1.1 500 Internal Server Error', true, 500);
 	die();
 }
 
@@ -68,5 +64,10 @@ require_once(fw_dir_inc."Routing.php");
 
 // Template
 require_once(fw_dir_inc."Template.php");
+
 // Module
 require_once(fw_dir_inc."Module.php");
+// Form class
+require_once(fw_dir_inc."Form.php");
+
+$fw_routing = new Routing;

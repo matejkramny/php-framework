@@ -5,3 +5,4 @@ Disallow: /inc/
 Disallow: /modules/
 Disallow: /templates/
 Disallow: /logs/
+Disallow: /temp/

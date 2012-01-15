@@ -40,20 +40,20 @@ class Routing {
     private function defineRoute($route=null) {
         // Defines route constants
         
-        if ($route == null)
+        if ($route === NULL)
             $route = $this->route;
 
-        if (!defined("fw_uri_lang")) {
+        if (!defined("fw_uri_lang"))
             define("fw_uri_lang", $route["lang"]);
-        }
-        if (!defined("fw_uri_module"))
+        
+        if (!defined("fw_module_name") && !defined("fw_module_uri_path"))
         {
-        	define ("fw_uri_module", $route["module"]);
+        	define ("fw_module_name", $route["module"]);
+        	define ("fw_module_uri_path", fw_uri.$route["module"]."/");
         }
-        if (!defined("fw_uri_module_args"))
-        {
-        	$GLOBALS["module_arguments"] = $route["moduleArguments"];
-        }
+        
+        $GLOBALS["fw_module_arguments"] = $route["moduleArguments"];
+        $GLOBALS["fw_module_action"] = $route["moduleAction"];
     }
 
     // Parses URL and decides which module is to be loaded, what language the page is to be displayed in etc.
@@ -81,8 +81,11 @@ class Routing {
 			// Check language existance
 			if ($GLOBALS['fw_langs']->langExists ($o[0]))
 				$lang = $o[0];
-			
-			$lang = fw_settings_lang;
+			else
+			{
+				array_unshift($o, fw_settings_lang);
+				$lang = fw_settings_lang;
+			}
 		}
 		else
 		{
@@ -96,7 +99,10 @@ class Routing {
 		if (isset($o[1]))
 		{
 			// Module class -> moduleExists ($o[1])
-			$module = "home";
+			if (ModuleHelper::moduleExists ($o[1]))
+				$module = $o[1];
+			else 
+				$module = "home";
 		}
 		else
 		{
@@ -110,7 +116,8 @@ class Routing {
 		{
 			$args[] = $o[$i];
 		}
+		
+		$r["moduleAction"] = isset ($args[0]) ? $args[0] : "home";
+		array_shift($args);
 	}
 }
-
-$fw_routing = new Routing;

@@ -6,7 +6,7 @@ abstract class Database
 	
 	public function connect(){
 		// Connect to mysql server
-		$db_connection = @mysql_connect(self::getHost(), self::getUsername(), self::getPassword());
+		$db_connection = mysql_connect(self::getHost(), self::getUsername(), self::getPassword());
 		
 		if(!defined("fw_mysql"))
 			define("fw_mysql", $db_connection);
@@ -221,11 +221,6 @@ final class DB extends Database {
             $build .= self::expandArray($options['fields'], false);
         else
             $build .= " * ";
-
-        if (fw_site_mode == "admin")
-            $table = fw_mysql_admin_table_prefix . $table;
-        else
-            $table = fw_mysql_table_prefix . $table;
 
         $build .= " FROM {$table}";
 

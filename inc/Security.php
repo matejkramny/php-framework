@@ -141,7 +141,6 @@ class Security{
 	{
 		// Veryfies user session
 		
-		// cookie verification
 		$token = (isset($_SESSION['token'])) ? $_SESSION['token'] : false;
 		if (!$token)
 		{
@@ -150,11 +149,13 @@ class Security{
 		
 		$expiry = (isset($_SESSION['expiry'])) ? $_SESSION['token'] : 1;
 		
-		if ($_SESSION['expiry']-1 < time())
+		if ($_SESSION['expiry'] <= time())
 		{
 			$this->recreateSession ();
 			return;
 		}
+		
+		$this->updateExpiry ();
 		
 		if (isset($_SESSION['u']) && is_array($_SESSION['u']) && $_SESSION['loggedIn'])
 			if ($this->verifyLogin ())
@@ -174,7 +175,7 @@ class Security{
 			)
 		));
 		
-		if (!$oDb)
+		if (!$oDb || $oDb === NULL)
 			return false;
 		
 		// security matter
@@ -201,12 +202,20 @@ class Security{
 	{
 		// token is randomly generated string
 		$token = substr( sha1( md5( uniqid() ) ), 2, 34);
-		$expiry = time() + (60 * 30);
+		$expiry = time() + (60 * 30); // 60 sec * 30 min timeframe
 		
+		session_unset();
+		session_destroy();
+		session_start();
 		$_SESSION['token'] = $token;
 		$_SESSION['expiry'] = $expiry;
 		
 		$this->recreateSession();
+	}
+	
+	private function updateExpiry ()
+	{
+		$_SESSION['expiry'] = time() + (60 * 30); // 60 sec * 30 min timeframe
 	}
 }
 

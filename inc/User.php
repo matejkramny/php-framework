@@ -62,4 +62,10 @@ class User
     {
         return Security::hash_password($password, $this->salt);
     }
+    
+    static function canUseModule ($module)
+    {
+    	// Returns bool based upon information about module
+    	// Module can be available for anyone, administrators or anyone with level above one specified in the module description
+    }
 }
