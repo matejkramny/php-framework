@@ -32,8 +32,8 @@ final class Form
 	 * 
 	 * Data types:
 	 * 	- datatype { // some relevant parameters (value type, like string, bool) }
-	 * 	- input { required (bool), value (string), validator (array ( type (string), min (int), max (int), regex (string), error (string) )) }
-	 *	- password { required (bool), value (string), validator (array ( type (string), min (int), max (int), regex (string), error (string) )) }
+	 * 	- input { required (bool), value (string), validator (array) }
+	 *	- password { required (bool), value (string), validator (array) }
 	 *	- file { required (bool), location (string), filename (string), maxFileSize (int) } // filename is optional, but will be automatically generated if not present, maxFileSize is also optional, needs to be in kilobytes. Default limit is 4096 kilobytes (4MB)
 	 *	- radio { required (bool) }
 	 *	- checkbox { required (bool), checked (bool) }
@@ -145,6 +145,7 @@ final class Form
         
         $m = $this->method == "POST" ? $_POST : $_GET;
        	
+       	// HTTP Form Valid field
         $valid = isset ($m['valid']) ? $m['valid'] : NULL;
         if ($valid === NULL)
         	return false;
@@ -159,13 +160,13 @@ final class Form
     	$this->receivedData = $m;
     	
     	// Validate form elements
-    	$this->valid = $valid = $this->validate ($m, $this->data);
+    	$this->valid = $this->validate ($m, $this->data);
     	
     	// Rebuild form data
     	$this->formCode = NULL;
     	$this->buildForm();
     	
-    	return $valid;
+    	return $this->valid;
     }
     private function validate ($received, $local)
     {
@@ -315,6 +316,8 @@ final class Form
     		else if (isset ($localValue["validator"]))
     		{
     			// Parse Validator array
+    			
+    			// TODO
     		}
     	}
     	

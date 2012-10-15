@@ -17,12 +17,29 @@ abstract class Module
 	
 	public function redirect ($page)
 	{
+		ob_end_clean();
 		header("Location: {$page}", true);
+		die();
 	}
 	
 	public function end ($pageProperties=NULL)
 	{
 		$GLOBALS['fw_template']->endPage ($pageProperties);
+	}
+	
+	public function loadFile ($fileLocation)
+	{
+		$fileLocation = substr($fileLocation, 0, 1) == '/' ? $fileLocation : fw_module_path.$fileLocation;
+		
+		if (file_exists($fileLocation))
+		{
+			// Tell template to add file to scene (contents, extension)
+			$GLOBALS['fw_template']->addFile (@file_get_contents ($fileLocation), substr ($fileLocation, strrpos($fileLocation, ".")+1, strlen ($fileLocation)));
+			return true;
+		}
+		
+		trigger_error("File loaded by module ".fw_module_name." does not exist.".$fileLocation, E_USER_WARNING);
+		return false;
 	}
 }
 
