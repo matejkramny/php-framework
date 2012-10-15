@@ -2,9 +2,9 @@
 
 // mysql database config
 define("fw_mysql_user", "root");
-define("fw_mysql_password", "root");
+define("fw_mysql_password", "octocat");
 define("fw_mysql_host", "localhost");
-define("fw_mysql_socket", "/tmp/mysql.sock");
+define("fw_mysql_socket", "/var/run/mysqld/mysqld.sock");
 define("fw_mysql_port", 3306);
 define("fw_mysql_database", "framework");
 

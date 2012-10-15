@@ -33,7 +33,7 @@ abstract class Module
 		
 		if (file_exists($fileLocation))
 		{
-			// Tell template to add file to scene (contents, extension)
+			// Tell template to add file to scene (contents, extension) -- TODO Fix Argument count?
 			$GLOBALS['fw_template']->addFile (@file_get_contents ($fileLocation), substr ($fileLocation, strrpos($fileLocation, ".")+1, strlen ($fileLocation)));
 			return true;
 		}

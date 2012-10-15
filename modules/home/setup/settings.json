@@ -1,0 +1,12 @@
+{
+	"Name": "Home",
+	"Description": "Home module",
+	"ClassPrefix": "Home",
+	"URL": "home",
+	"Install": {
+		"SQL": "install.sql"
+	},
+	"UnInstall": {
+		"SQL": "uninstall.sql"
+	}
+}

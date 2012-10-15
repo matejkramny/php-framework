@@ -1,5 +1,4 @@
 <?php
-
 // The directory path accessible over internet
 $uri = "/";
 

@@ -12,7 +12,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- Database: `framework`
 --
-CREATE DATABASE `framework` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+CREATE DATABASE IF NOT EXISTS `framework` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `framework`;
 
 -- --------------------------------------------------------
@@ -188,3 +188,16 @@ CREATE TABLE IF NOT EXISTS `testTable` (
 -- Dumping data for table `testTable`
 --
 
+--
+-- Table structure for table `sys_modules`
+--
+DROP TABLE IF EXISTS `sys_modules`;
+CREATE TABLE IF NOT EXISTS `sys_modules` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `Name` varchar(256) NOT NULL,
+  `Path` varchar(256) NOT NULL,
+  `ClassPrefix` varchar(256) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+INSERT INTO `sys_modules` VALUES (1, "home", "home", "Home");
