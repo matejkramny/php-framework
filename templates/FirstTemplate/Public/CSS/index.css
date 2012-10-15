@@ -1,0 +1,247 @@
+body
+{
+	background:url(images/bg.png) repeat;
+}
+
+#header
+{
+	width: 100%;
+	min-width: 980px;
+}
+
+/* Messages */
+#header #messages
+{
+	width: 100%;
+	background: url(images/message_bg.png) repeat;
+	position:relative;
+}
+#header #messages .message_divider
+{
+	height: 1px;
+	width: inherit;
+	background: #666;
+}
+#header #messages .message, #header #messages .message_red
+{
+	position:relative;
+	min-width: 980px;
+	overflow: hidden;
+	height: 50px;
+}
+#header #messages .message p, #header #messages .message_red p
+{
+	padding: 10px;
+	color:#CCC;
+	font-size: 24px;
+	text-align: center;
+	letter-spacing: 1px;
+	height: inherit;
+}
+#header #messages .message_red p
+{
+	color:#F00;
+}
+#header #messages .message .message_close_button, #header #messages .message_red .message_close_button
+{
+	width: 44px;
+	height: 44px;
+	background:url(images/no_repeat.png) no-repeat 0px -494px;
+	position:absolute;
+	right: 3px;
+	top: 3px;
+	cursor:pointer;
+}
+
+/* Navigation */
+#header #navigation_bg
+{
+	width: 100%;
+	min-width: inherit;
+	background: url(images/repeat_x.png) 0px -42px repeat-x;
+	height: 119px;
+}
+#header #navigation_bg #navigation
+{
+	width: 980px;
+	margin: 0 auto;
+	height: 90px;
+	position:relative;
+}
+#header #navigation_bg #navigation ul
+{
+	width: inherit;
+	height: inherit;
+}
+#header #navigation_bg #navigation ul li
+{
+	float: left;
+	text-indent: -99999999px;
+	height: inherit;
+	margin: auto;
+	position:relative;
+	cursor: pointer;
+}
+#header #navigation_bg #navigation ul li a
+{
+	display: block;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	margin: auto;
+}
+#header #navigation_bg #navigation ul li#nav_about
+{
+	width: 159px;
+	height: inherit;
+}
+#header #navigation_bg #navigation ul li#nav_features
+{
+	width: 202px;
+	height: inherit;
+}
+#header #navigation_bg #navigation ul li#nav_documentation
+{
+	width: 303px;
+	height: inherit;
+}
+#header #navigation_bg #navigation ul li#nav_faq
+{
+	width: 127px;
+	height: inherit;
+}
+#header #navigation_bg #navigation ul li#nav_support
+{
+	width: 189px;
+	height: inherit;
+}
+#header #navigation_bg #navigation ul li#nav_about a
+{
+	background:url(images/no_repeat.png) no-repeat 0px -266px;
+	width: 106px;
+	height: 36px;
+}
+#header #navigation_bg #navigation ul li#nav_features a
+{
+	background:url(images/no_repeat.png) no-repeat 0px -303px;
+	width: 149px;
+	height: 36px;
+}
+#header #navigation_bg #navigation ul li#nav_documentation a
+{
+	background:url(images/no_repeat.png) no-repeat 0px -340px;
+	width: 262px;
+	height: 36px;
+}
+#header #navigation_bg #navigation ul li#nav_faq a
+{
+	background:url(images/no_repeat.png) no-repeat 0px -377px;
+	width: 73px;
+	height: 36px;
+}
+#header #navigation_bg #navigation ul li#nav_support a
+{
+	background: url(images/no_repeat.png) no-repeat 0px -414px;
+	width: 140px;
+	height: 36px;
+}
+
+/* Navigation hover */
+#header #navigation_bg #navigation #nav_hover
+{
+	height: inherit;
+	width: 159px;
+	position: absolute;
+	left: 0px;
+}
+#header #navigation_bg #navigation #nav_hover #nav_hover_left
+{
+	background:url(images/no_repeat.png) no-repeat 0px 0px;
+	width: 20px;
+	height: inherit;
+	float:left;
+}
+#header #navigation_bg #navigation #nav_hover #nav_hover_bg
+{
+	background:url(images/repeat_x.png) repeat-x 0px -162px;
+	width: 119px;
+	height: inherit;
+	float: left;
+}
+#header #navigation_bg #navigation #nav_hover #nav_hover_right
+{
+	background:url(images/no_repeat.png) no-repeat 0px -91px;
+	width: 20px;
+	height: inherit;
+	float:right;
+}
+
+#content
+{
+	width: 980px;
+	position:relative;
+	margin: 0 auto;
+}
+#content #container
+{
+}
+#content #container #cont_top_left, #content #container #cont_top_right, #content #container #cont_bottom_left, #content #container #cont_bottom_right
+{
+	height: 20px;
+	width: 20px;
+	background:url(images/no_repeat.png) no-repeat;
+}
+#content #container #cont_top_left
+{
+	background-position: 0px -203px;
+	float:left;
+}
+#content #container #cont_top
+{
+	height: 20px;
+	width: 940px;
+	background:url(images/repeat_x.png) repeat-x 0px -21px;
+	float:left;
+}
+#content #container #cont_top_right
+{
+	background-position:0px -245px;
+	float:right;
+}
+#content #container #cont_left
+{
+	width: 20px;
+	background: url(images/repeat_y.png) repeat-y 0px 0px;
+	float:left;
+}
+#content #container #cont_content
+{
+	float:left;
+	background: url(images/cont_repeat.png) repeat;
+	width: 940px;
+}
+#content #container #cont_right
+{
+	width: 20px;
+	background:url(images/repeat_y.png) repeat-y -21px 0px;
+	float:right;
+}
+#content #container #cont_bottom_left
+{
+	background-position: 0px -182px;
+	float:left;
+}
+#content #container #cont_bottom
+{
+	height: 20px;
+	width: 940px;
+	background:url(images/repeat_x.png) repeat-x 0px 0px;
+	float:left;
+}
+#content #container #cont_bottom_right
+{
+	background-position:0px -224px;
+	float:right;
+}

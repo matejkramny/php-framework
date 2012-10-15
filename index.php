@@ -4,7 +4,7 @@
 $uri = "/";
 
 // Define URL constants
-define('fw_root', 			realpath(dirname(__FILE__)) . '/');		// absolute server path
+define('fw_root',			realpath(dirname(__FILE__)) . '/');		// absolute server path
 define('fw_URI',		 	$uri,  true);							// browser-friendly path
 
 // include path is set to abs. server path
@@ -68,3 +68,5 @@ echo $GLOBALS['fw_template']->page;
 
 // Finish
 ob_end_flush();
+flush();
+die();

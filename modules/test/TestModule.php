@@ -4,7 +4,7 @@ final class TestModule extends Module
 {
 	public function TestModule ()
 	{
-		// Initialisator
+		// Initializator
 		
 		// Instantiate database
 		$this->setUpDB = true;
@@ -96,6 +96,7 @@ final class TestModule extends Module
 	public function _home ($args, $argc)
 	{
 		// When module argument #1 is equal to nothing or 'home'
+		$this->loadFile ('Public/css/sometest.css');
 		
 		// Print out form.
 		$form = new Form ($this->form);

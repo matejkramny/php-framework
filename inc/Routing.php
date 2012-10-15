@@ -98,7 +98,6 @@ class Routing {
 		$module = &$r["module"];
 		if (isset($o[1]))
 		{
-			// Module class -> moduleExists ($o[1])
 			if (ModuleHelper::moduleExists ($o[1]))
 				$module = $o[1];
 			else 

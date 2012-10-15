@@ -21,6 +21,7 @@ define("fw_dir_modules", "modules/");
 define("fw_dir_admin", "modules/admin/"); // Directory for admin-specific modules
 define("fw_dir_templates", "templates/");
 define("fw_dir_temp", "temp/");
+define("fw_dir_assets", fw_root."Assets/");
 
 // error reporting & logging
 @ini_set("display_errors", "On");
@@ -46,11 +47,16 @@ if (!$fw_db->connect())
 	// Log
 	trigger_error("MySQL Database not working!", E_USER_WARNING);
 	
-	// Clean and end the output
+	// Clean and end the output buffer
 	ob_end_clean();
 	
 	// Send Status 500, Internal Server Error..
 	header('HTTP/1.1 500 Internal Server Error', true, 500);
+	
+	if (file_exists (fw_root."500.html"))
+		echo file_get_contents (fw_root."500.html");
+	
+	flush();
 	die();
 }
 

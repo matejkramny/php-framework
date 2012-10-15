@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<title>{page_title}</title>
+		<meta http-equiv="Content-Type" content="text/html; charset={page_charset}" />
+        {page_stylesheets}
+	</head>
+	
+	<body>
+    	<div id="header">
+        	<div id="messages">
+        		{page_messages}
+            </div>
+        	<div id="navigation_bg">
+            	<div id="navigation">
+                	<div id="nav_hover">
+                		<div id="nav_hover_left"></div>
+                        <div id="nav_hover_bg"></div>
+                    	<div id="nav_hover_right"></div>
+                	</div>
+                	<ul>
+                		<li id="nav_about"><a href="#about">About</a></li>
+	                    <li id="nav_features"><a href="#features">Features</a></li>
+    	                <li id="nav_documentation"><a href="#documentation">Documentation</a></li>
+        	            <li id="nav_faq"><a href="#faq">FAQ</a></li>
+            	        <li id="nav_support"><a href="#support">Support</a></li>
+                	</ul>
+                </div>
+            </div>
+        </div>
+        <div id="content">
+        	<div id="container">
+				<div id="cont_top_left"></div>
+				<div id="cont_top"></div>
+				<div id="cont_top_right"></div>
+                <div style="clear:both"></div>
+				<div id="cont_left"></div>
+				<div id="cont_content">
+                    {page_content}
+                </div>
+				<div id="cont_right"></div>
+                <div style="clear:both"></div>
+				<div id="cont_bottom_left"></div>
+				<div id="cont_bottom"></div>
+				<div id="cont_bottom_right"></div>
+        	</div>
+        </div>
+    
+    <!-- Scripts not to affect load of other documents -->
+    <script type="text/javascript" language="javascript">
+		var sliderAt;
+		var sliderOrigin = sliderAt = {page_nav_active};
+    </script>
+    <script type="text/javascript" language="javascript" src="jquery.js"></script>
+    <!--[if (gte IE 6)&(lte IE 8)]>
+		<script defer src="//s3.amazonaws.com/nwapi/nwmatcher/nwmatcher-1.2.4-min.js"></script>
+		<script defer src="selectivizr.js"></script>
+	<![endif]-->
+    <script type="text/javascript" language="javascript" src="jquery.tools.js"></script>
+    <script type="text/javascript" language="javascript" src="index.js"></script>
+    {page_javascript}
+	</body>
+</html>
