@@ -1,203 +1,93 @@
--- phpMyAdmin SQL Dump
--- version 3.2.5
--- http://www.phpmyadmin.net
---
--- Host: localhost
--- Generation Time: Jan 09, 2012 at 03:59 PM
--- Server version: 5.1.44
--- PHP Version: 5.3.2
-
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
---
--- Database: `framework`
---
+-- --------------------------------------------------------
+
 CREATE DATABASE IF NOT EXISTS `framework` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `framework`;
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `file_uploads`
---
-
 DROP TABLE IF EXISTS `file_uploads`;
 CREATE TABLE IF NOT EXISTS `file_uploads` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `location` varchar(256) NOT NULL,
-  `filename` varchar(256) NOT NULL,
-  `extension` varchar(256) NOT NULL,
-  `timestamp` int(10) NOT NULL,
+  `location` varchar(256) NOT NULL COMMENT 'Location of the uploaded file',
+  `filename` varchar(256) NOT NULL COMMENT 'Name of the uploaded file',
+  `extension` varchar(256) NOT NULL COMMENT 'Extension of the file',
+  `timestamp` int(10) NOT NULL COMMENT 'UNIX timestamp of time when the file was uploaded',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `file_uploads`
---
-
-
 -- --------------------------------------------------------
 
---
--- Table structure for table `forms`
---
+-- Store data associated with forms created by modules
 
 DROP TABLE IF EXISTS `forms`;
 CREATE TABLE IF NOT EXISTS `forms` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `code` varchar(256) NOT NULL,
+  `code` varchar(256) NOT NULL COMMENT 'Unique ID of the form. if form does not include this id it cannot be accepted and is not valid',
   `timestamp` int(10) unsigned NOT NULL COMMENT 'Unix timestamp',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `forms`
---
-
-
 -- --------------------------------------------------------
-
---
--- Table structure for table `profiles`
---
 
 DROP TABLE IF EXISTS `profiles`;
 CREATE TABLE IF NOT EXISTS `profiles` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(256) NOT NULL,
-  `surname` varchar(256) NOT NULL,
-  `username` varchar(256) NOT NULL,
-  `email` varchar(256) NOT NULL,
-  `salt` varchar(16) NOT NULL,
-  `password` varchar(256) NOT NULL,
-  `lang` varchar(5) NOT NULL,
-  `template` int(11) NOT NULL DEFAULT '1',
-  `created` int(10) NOT NULL,
-  `last_access` int(10) NOT NULL,
-  `last_ip` varchar(15) NOT NULL,
+  `name` varchar(256) NOT NULL COMMENT 'Profile first name',
+  `surname` varchar(256) NOT NULL COMMENT 'Surname of the profile',
+  `middlename` varchar(256) NOT NULL COMMENT 'Middle name (if any)',
+  `username` varchar(256) NOT NULL COMMENT 'unique username',
+  `email` varchar(256) NOT NULL COMMENT 'unique email',
+  `salt` varchar(16) NOT NULL COMMENT 'Randomly generated salt',
+  `password` varchar(256) NOT NULL COMMENT 'Hashed password',
+  `lang` varchar(5) NOT NULL COMMENT 'Language name ID',
+  `template` varchar(256) NOT NULL DEFAULT '1' COMMENT 'Template name',
+  `created` int(10) NOT NULL COMMENT 'UNIX timestamp of time when account was created',
+  `last_access` int(10) NOT NULL COMMENT 'UNIX timestamp of time when the account was last accessed',
+  `last_ip` int(11) unsigned NOT NULL COMMENT 'Last ID of IP address of this accounts login',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
---
--- Dumping data for table `profiles`
---
-
+-- FIX THIS NOT COMPLETE (TODO)
 INSERT INTO `profiles` VALUES(3, 'matej', 'kramny', 'mkram0', 'matejkramny@gmail.com', '63c7727ac872c8e3', '6kBQL1VzVnJQOfEmozDEByJFZv557oJwF6TAKXHQqNY5VSITHESmTp6zJcaZR9mzmA4DhZBiNjUB.qZdmEPlv0', 'en', 1, 1323521498, 0, '');
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `sys_bans`
---
-
-DROP TABLE IF EXISTS `sys_bans`;
+DROP TABLE IF EXISTS `bans`;
 CREATE TABLE IF NOT EXISTS `sys_bans` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `uid` int(11) unsigned NOT NULL,
-  `ip` varchar(15) NOT NULL,
-  `Expires` int(10) NOT NULL,
+  `uid` int(11) unsigned NOT NULL COMMENT 'User ID',
+  `ip` int(11) unsigned NOT NULL COMMENT 'banned IP address',
+  `Expires` int(10) NOT NULL COMMENT 'Time ban expires (if any)',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `sys_bans`
---
-
-
 -- --------------------------------------------------------
 
---
--- Table structure for table `sys_languages`
---
+-- IP addresses table
 
-DROP TABLE IF EXISTS `sys_languages`;
-CREATE TABLE IF NOT EXISTS `sys_languages` (
+DROP TABLE IF EXISTS `ip`;
+CREATE TABLE IF NOT EXISTS `ip` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `lang_code` varchar(5) NOT NULL,
-  `lang_full` varchar(256) NOT NULL,
+  `ipv4` varchar(15) NOT NULL COMMENT 'an ipv4 address',
+  `ipv6` varchar(256) NOT NULL COMMENT 'an ipv6 address',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM DEFAULT charset=utf8 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `sys_languages`
---
-
-INSERT INTO `sys_languages` VALUES(1, 'en', 'English');
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `sys_settings`
---
+-- Key=Value store table
 
-DROP TABLE IF EXISTS `sys_settings`;
-CREATE TABLE IF NOT EXISTS `sys_settings` (
+DROP TABLE IF EXISTS `settings`;
+CREATE TABLE IF NOT EXISTS `settings` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(256) NOT NULL,
-  `value` varchar(256) NOT NULL,
+  `name` varchar(256) NOT NULL COMMENT 'Key',
+  `value` varchar(256) NOT NULL COMMENT 'Value',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
---
--- Dumping data for table `sys_settings`
---
-
-INSERT INTO `sys_settings` VALUES(1, 'lang', 'en');
-INSERT INTO `sys_settings` VALUES(2, 'template', '1');
-INSERT INTO `sys_settings` VALUES(3, 'template_path', 'default');
-INSERT INTO `sys_settings` VALUES(4, 'upload_file_size', '4096');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `sys_templates`
---
-
-DROP TABLE IF EXISTS `sys_templates`;
-CREATE TABLE IF NOT EXISTS `sys_templates` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(256) NOT NULL,
-  `path` varchar(256) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
-
---
--- Dumping data for table `sys_templates`
---
-
-INSERT INTO `sys_templates` VALUES(1, 'Default look', 'default');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `testTable`
---
-
-DROP TABLE IF EXISTS `testTable`;
-CREATE TABLE IF NOT EXISTS `testTable` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `username` varchar(256) NOT NULL,
-  `password` varchar(256) NOT NULL,
-  `gender` varchar(256) NOT NULL,
-  `picture` int(11) NOT NULL,
-  `terms` varchar(256) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
---
--- Dumping data for table `testTable`
---
-
---
--- Table structure for table `sys_modules`
---
-DROP TABLE IF EXISTS `sys_modules`;
-CREATE TABLE IF NOT EXISTS `sys_modules` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `Name` varchar(256) NOT NULL,
-  `Path` varchar(256) NOT NULL,
-  `ClassPrefix` varchar(256) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
-INSERT INTO `sys_modules` VALUES (1, "home", "home", "Home");
+INSERT INTO `settings` VALUES(1, 'lang', 'en');
+INSERT INTO `settings` VALUES(2, 'default_template', 'default');
+INSERT INTO `settings` VALUES(3, 'max_upload_file_size', '4096');

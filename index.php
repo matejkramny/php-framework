@@ -1,6 +1,6 @@
 <?php
 // The directory path accessible over internet
-$uri = "/";
+$uri = "/fw-dir/";
 
 // Define URL constants
 define('fw_root', 			realpath(dirname(__FILE__)) . '/');		// absolute server path
@@ -14,9 +14,7 @@ require_once("config.inc.php");
 
 // Translate function
 function _t ($key)
-{
     return $GLOBALS['fw_langs']->translate ($key);
-}
 
 // user class
 require_once(fw_dir_inc."User.php");

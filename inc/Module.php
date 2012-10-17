@@ -90,6 +90,8 @@ final class ModuleHelper
 		$oDb = DB::getRow ("sys_modules", array (
 			"where" => "`Name` LIKE '{$moduleName}'"
 		));
+		// TODO check for fileexists folder of module, followed by the settings json file
+		// todo return decoded json file
 		
 		if ($oDb === NULL)
 			return NULL;

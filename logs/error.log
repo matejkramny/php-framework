@@ -2286,3 +2286,127 @@
 [15-Oct-2012 20:28:10 UTC] PHP   6. TemplateBase::loadFile() /var/www/php-fw/templates/default/Template.php:51
 [15-Oct-2012 20:28:10 UTC] PHP   7. TemplateBase::parse() /var/www/php-fw/inc/Template.php:120
 [15-Oct-2012 20:28:10 UTC] PHP   8. TemplateBase::parseLoop() /var/www/php-fw/inc/Template.php:56
+[16-Oct-2012 09:15:07 UTC] PHP Warning:  Missing argument 3 for TemplateBase::addFile(), called in /var/www/php-fw/inc/Module.php on line 37 and defined in /var/www/php-fw/inc/Template.php on line 139
+[16-Oct-2012 09:15:07 UTC] PHP Stack trace:
+[16-Oct-2012 09:15:07 UTC] PHP   1. {main}() /var/www/php-fw/index.php:0
+[16-Oct-2012 09:15:07 UTC] PHP   2. call_user_func() /var/www/php-fw/index.php:60
+[16-Oct-2012 09:15:07 UTC] PHP   3. HomeModule->_home() /var/www/php-fw/index.php:60
+[16-Oct-2012 09:15:07 UTC] PHP   4. Module->loadFile() /var/www/php-fw/modules/home/HomeModule.php:99
+[16-Oct-2012 09:15:07 UTC] PHP   5. TemplateBase->addFile() /var/www/php-fw/inc/Module.php:37
+[16-Oct-2012 09:15:07 UTC] PHP Notice:  Undefined variable: extension in /var/www/php-fw/inc/Template.php on line 141
+[16-Oct-2012 09:15:07 UTC] PHP Stack trace:
+[16-Oct-2012 09:15:07 UTC] PHP   1. {main}() /var/www/php-fw/index.php:0
+[16-Oct-2012 09:15:07 UTC] PHP   2. call_user_func() /var/www/php-fw/index.php:60
+[16-Oct-2012 09:15:07 UTC] PHP   3. HomeModule->_home() /var/www/php-fw/index.php:60
+[16-Oct-2012 09:15:07 UTC] PHP   4. Module->loadFile() /var/www/php-fw/modules/home/HomeModule.php:99
+[16-Oct-2012 09:15:07 UTC] PHP   5. TemplateBase->addFile() /var/www/php-fw/inc/Module.php:37
+[16-Oct-2012 09:15:07 UTC] PHP Notice:  Undefined variable: extension in /var/www/php-fw/inc/Template.php on line 142
+[16-Oct-2012 09:15:07 UTC] PHP Stack trace:
+[16-Oct-2012 09:15:07 UTC] PHP   1. {main}() /var/www/php-fw/index.php:0
+[16-Oct-2012 09:15:07 UTC] PHP   2. call_user_func() /var/www/php-fw/index.php:60
+[16-Oct-2012 09:15:07 UTC] PHP   3. HomeModule->_home() /var/www/php-fw/index.php:60
+[16-Oct-2012 09:15:07 UTC] PHP   4. Module->loadFile() /var/www/php-fw/modules/home/HomeModule.php:99
+[16-Oct-2012 09:15:07 UTC] PHP   5. TemplateBase->addFile() /var/www/php-fw/inc/Module.php:37
+[16-Oct-2012 09:15:07 UTC] PHP Notice:  Undefined variable: extension in /var/www/php-fw/inc/Template.php on line 146
+[16-Oct-2012 09:15:07 UTC] PHP Stack trace:
+[16-Oct-2012 09:15:07 UTC] PHP   1. {main}() /var/www/php-fw/index.php:0
+[16-Oct-2012 09:15:07 UTC] PHP   2. call_user_func() /var/www/php-fw/index.php:60
+[16-Oct-2012 09:15:07 UTC] PHP   3. HomeModule->_home() /var/www/php-fw/index.php:60
+[16-Oct-2012 09:15:07 UTC] PHP   4. Module->loadFile() /var/www/php-fw/modules/home/HomeModule.php:99
+[16-Oct-2012 09:15:07 UTC] PHP   5. TemplateBase->addFile() /var/www/php-fw/inc/Module.php:37
+[16-Oct-2012 09:15:07 UTC] PHP Notice:  Undefined variable: key in /var/www/php-fw/inc/Template.php on line 109
+[16-Oct-2012 09:15:07 UTC] PHP Stack trace:
+[16-Oct-2012 09:15:07 UTC] PHP   1. {main}() /var/www/php-fw/index.php:0
+[16-Oct-2012 09:15:07 UTC] PHP   2. call_user_func() /var/www/php-fw/index.php:60
+[16-Oct-2012 09:15:07 UTC] PHP   3. HomeModule->_home() /var/www/php-fw/index.php:60
+[16-Oct-2012 09:15:07 UTC] PHP   4. Module->end() /var/www/php-fw/modules/home/HomeModule.php:116
+[16-Oct-2012 09:15:07 UTC] PHP   5. Template->endPage() /var/www/php-fw/inc/Module.php:27
+[16-Oct-2012 09:15:07 UTC] PHP   6. TemplateBase::loadFile() /var/www/php-fw/templates/default/Template.php:51
+[16-Oct-2012 09:15:07 UTC] PHP   7. TemplateBase::parse() /var/www/php-fw/inc/Template.php:120
+[16-Oct-2012 09:15:07 UTC] PHP   8. TemplateBase::parseLoop() /var/www/php-fw/inc/Template.php:56
+[16-Oct-2012 09:21:32 UTC] PHP Warning:  Missing argument 3 for TemplateBase::addFile(), called in /var/www/php-fw/inc/Module.php on line 37 and defined in /var/www/php-fw/inc/Template.php on line 139
+[16-Oct-2012 09:21:32 UTC] PHP Stack trace:
+[16-Oct-2012 09:21:32 UTC] PHP   1. {main}() /var/www/php-fw/index.php:0
+[16-Oct-2012 09:21:32 UTC] PHP   2. call_user_func() /var/www/php-fw/index.php:60
+[16-Oct-2012 09:21:32 UTC] PHP   3. HomeModule->_home() /var/www/php-fw/index.php:60
+[16-Oct-2012 09:21:32 UTC] PHP   4. Module->loadFile() /var/www/php-fw/modules/home/HomeModule.php:99
+[16-Oct-2012 09:21:32 UTC] PHP   5. TemplateBase->addFile() /var/www/php-fw/inc/Module.php:37
+[16-Oct-2012 09:21:32 UTC] PHP Notice:  Undefined variable: extension in /var/www/php-fw/inc/Template.php on line 141
+[16-Oct-2012 09:21:32 UTC] PHP Stack trace:
+[16-Oct-2012 09:21:32 UTC] PHP   1. {main}() /var/www/php-fw/index.php:0
+[16-Oct-2012 09:21:32 UTC] PHP   2. call_user_func() /var/www/php-fw/index.php:60
+[16-Oct-2012 09:21:32 UTC] PHP   3. HomeModule->_home() /var/www/php-fw/index.php:60
+[16-Oct-2012 09:21:32 UTC] PHP   4. Module->loadFile() /var/www/php-fw/modules/home/HomeModule.php:99
+[16-Oct-2012 09:21:32 UTC] PHP   5. TemplateBase->addFile() /var/www/php-fw/inc/Module.php:37
+[16-Oct-2012 09:21:32 UTC] PHP Notice:  Undefined variable: extension in /var/www/php-fw/inc/Template.php on line 142
+[16-Oct-2012 09:21:32 UTC] PHP Stack trace:
+[16-Oct-2012 09:21:32 UTC] PHP   1. {main}() /var/www/php-fw/index.php:0
+[16-Oct-2012 09:21:32 UTC] PHP   2. call_user_func() /var/www/php-fw/index.php:60
+[16-Oct-2012 09:21:32 UTC] PHP   3. HomeModule->_home() /var/www/php-fw/index.php:60
+[16-Oct-2012 09:21:32 UTC] PHP   4. Module->loadFile() /var/www/php-fw/modules/home/HomeModule.php:99
+[16-Oct-2012 09:21:32 UTC] PHP   5. TemplateBase->addFile() /var/www/php-fw/inc/Module.php:37
+[16-Oct-2012 09:21:32 UTC] PHP Notice:  Undefined variable: extension in /var/www/php-fw/inc/Template.php on line 146
+[16-Oct-2012 09:21:32 UTC] PHP Stack trace:
+[16-Oct-2012 09:21:32 UTC] PHP   1. {main}() /var/www/php-fw/index.php:0
+[16-Oct-2012 09:21:32 UTC] PHP   2. call_user_func() /var/www/php-fw/index.php:60
+[16-Oct-2012 09:21:32 UTC] PHP   3. HomeModule->_home() /var/www/php-fw/index.php:60
+[16-Oct-2012 09:21:32 UTC] PHP   4. Module->loadFile() /var/www/php-fw/modules/home/HomeModule.php:99
+[16-Oct-2012 09:21:32 UTC] PHP   5. TemplateBase->addFile() /var/www/php-fw/inc/Module.php:37
+[16-Oct-2012 09:21:32 UTC] PHP Notice:  Undefined variable: key in /var/www/php-fw/inc/Template.php on line 109
+[16-Oct-2012 09:21:32 UTC] PHP Stack trace:
+[16-Oct-2012 09:21:32 UTC] PHP   1. {main}() /var/www/php-fw/index.php:0
+[16-Oct-2012 09:21:32 UTC] PHP   2. call_user_func() /var/www/php-fw/index.php:60
+[16-Oct-2012 09:21:32 UTC] PHP   3. HomeModule->_home() /var/www/php-fw/index.php:60
+[16-Oct-2012 09:21:32 UTC] PHP   4. Module->end() /var/www/php-fw/modules/home/HomeModule.php:116
+[16-Oct-2012 09:21:32 UTC] PHP   5. Template->endPage() /var/www/php-fw/inc/Module.php:27
+[16-Oct-2012 09:21:32 UTC] PHP   6. TemplateBase::loadFile() /var/www/php-fw/templates/default/Template.php:51
+[16-Oct-2012 09:21:32 UTC] PHP   7. TemplateBase::parse() /var/www/php-fw/inc/Template.php:120
+[16-Oct-2012 09:21:32 UTC] PHP   8. TemplateBase::parseLoop() /var/www/php-fw/inc/Template.php:56
+[16-Oct-2012 09:21:37 UTC] PHP Warning:  Missing argument 3 for TemplateBase::addFile(), called in /var/www/php-fw/inc/Module.php on line 37 and defined in /var/www/php-fw/inc/Template.php on line 139
+[16-Oct-2012 09:21:37 UTC] PHP Stack trace:
+[16-Oct-2012 09:21:37 UTC] PHP   1. {main}() /var/www/php-fw/index.php:0
+[16-Oct-2012 09:21:37 UTC] PHP   2. call_user_func() /var/www/php-fw/index.php:60
+[16-Oct-2012 09:21:37 UTC] PHP   3. HomeModule->_home() /var/www/php-fw/index.php:60
+[16-Oct-2012 09:21:37 UTC] PHP   4. Module->loadFile() /var/www/php-fw/modules/home/HomeModule.php:99
+[16-Oct-2012 09:21:37 UTC] PHP   5. TemplateBase->addFile() /var/www/php-fw/inc/Module.php:37
+[16-Oct-2012 09:21:37 UTC] PHP Notice:  Undefined variable: extension in /var/www/php-fw/inc/Template.php on line 141
+[16-Oct-2012 09:21:37 UTC] PHP Stack trace:
+[16-Oct-2012 09:21:37 UTC] PHP   1. {main}() /var/www/php-fw/index.php:0
+[16-Oct-2012 09:21:37 UTC] PHP   2. call_user_func() /var/www/php-fw/index.php:60
+[16-Oct-2012 09:21:37 UTC] PHP   3. HomeModule->_home() /var/www/php-fw/index.php:60
+[16-Oct-2012 09:21:37 UTC] PHP   4. Module->loadFile() /var/www/php-fw/modules/home/HomeModule.php:99
+[16-Oct-2012 09:21:37 UTC] PHP   5. TemplateBase->addFile() /var/www/php-fw/inc/Module.php:37
+[16-Oct-2012 09:21:37 UTC] PHP Notice:  Undefined variable: extension in /var/www/php-fw/inc/Template.php on line 142
+[16-Oct-2012 09:21:37 UTC] PHP Stack trace:
+[16-Oct-2012 09:21:37 UTC] PHP   1. {main}() /var/www/php-fw/index.php:0
+[16-Oct-2012 09:21:37 UTC] PHP   2. call_user_func() /var/www/php-fw/index.php:60
+[16-Oct-2012 09:21:37 UTC] PHP   3. HomeModule->_home() /var/www/php-fw/index.php:60
+[16-Oct-2012 09:21:37 UTC] PHP   4. Module->loadFile() /var/www/php-fw/modules/home/HomeModule.php:99
+[16-Oct-2012 09:21:37 UTC] PHP   5. TemplateBase->addFile() /var/www/php-fw/inc/Module.php:37
+[16-Oct-2012 09:21:37 UTC] PHP Notice:  Undefined variable: extension in /var/www/php-fw/inc/Template.php on line 146
+[16-Oct-2012 09:21:37 UTC] PHP Stack trace:
+[16-Oct-2012 09:21:37 UTC] PHP   1. {main}() /var/www/php-fw/index.php:0
+[16-Oct-2012 09:21:37 UTC] PHP   2. call_user_func() /var/www/php-fw/index.php:60
+[16-Oct-2012 09:21:37 UTC] PHP   3. HomeModule->_home() /var/www/php-fw/index.php:60
+[16-Oct-2012 09:21:37 UTC] PHP   4. Module->loadFile() /var/www/php-fw/modules/home/HomeModule.php:99
+[16-Oct-2012 09:21:37 UTC] PHP   5. TemplateBase->addFile() /var/www/php-fw/inc/Module.php:37
+[16-Oct-2012 09:21:37 UTC] PHP Notice:  Undefined variable: key in /var/www/php-fw/inc/Template.php on line 109
+[16-Oct-2012 09:21:37 UTC] PHP Stack trace:
+[16-Oct-2012 09:21:37 UTC] PHP   1. {main}() /var/www/php-fw/index.php:0
+[16-Oct-2012 09:21:37 UTC] PHP   2. call_user_func() /var/www/php-fw/index.php:60
+[16-Oct-2012 09:21:37 UTC] PHP   3. HomeModule->_home() /var/www/php-fw/index.php:60
+[16-Oct-2012 09:21:37 UTC] PHP   4. Module->end() /var/www/php-fw/modules/home/HomeModule.php:116
+[16-Oct-2012 09:21:37 UTC] PHP   5. Template->endPage() /var/www/php-fw/inc/Module.php:27
+[16-Oct-2012 09:21:37 UTC] PHP   6. TemplateBase::loadFile() /var/www/php-fw/templates/default/Template.php:51
+[16-Oct-2012 09:21:37 UTC] PHP   7. TemplateBase::parse() /var/www/php-fw/inc/Template.php:120
+[16-Oct-2012 09:21:37 UTC] PHP   8. TemplateBase::parseLoop() /var/www/php-fw/inc/Template.php:56
+[16-Oct-2012 09:26:36 UTC] PHP Notice:  Undefined variable: key in /var/www/php-fw/inc/Template.php on line 109
+[16-Oct-2012 09:26:36 UTC] PHP Stack trace:
+[16-Oct-2012 09:26:36 UTC] PHP   1. {main}() /var/www/php-fw/index.php:0
+[16-Oct-2012 09:26:36 UTC] PHP   2. call_user_func() /var/www/php-fw/index.php:60
+[16-Oct-2012 09:26:36 UTC] PHP   3. HomeModule->_home() /var/www/php-fw/index.php:60
+[16-Oct-2012 09:26:36 UTC] PHP   4. Module->end() /var/www/php-fw/modules/home/HomeModule.php:116
+[16-Oct-2012 09:26:36 UTC] PHP   5. Template->endPage() /var/www/php-fw/inc/Module.php:27
+[16-Oct-2012 09:26:36 UTC] PHP   6. TemplateBase::loadFile() /var/www/php-fw/templates/default/Template.php:51
+[16-Oct-2012 09:26:36 UTC] PHP   7. TemplateBase::parse() /var/www/php-fw/inc/Template.php:120
+[16-Oct-2012 09:26:36 UTC] PHP   8. TemplateBase::parseLoop() /var/www/php-fw/inc/Template.php:56

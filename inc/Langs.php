@@ -12,7 +12,7 @@ class Langs {
     public static function getLangs($langCode=NULL)
     {
     	// Retrieve all languages or only one in case $langCode != NULL
-    	
+    	// todo skip database loading of language code, and load the lanugage.json file directly
     	if ($langCode == NULL)
     	{
     		// Build up array of languages consisting of ['lang_code', 'lang_full']

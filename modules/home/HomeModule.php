@@ -96,7 +96,7 @@ final class HomeModule extends Module
 	public function _home ($args, $argc)
 	{
 		// When module argument #1 is equal to nothing or 'home'
-		$this->loadFile ('Public/css/sometest.css');
+//		$this->loadFile ('Public/css/sometest.css');
 		
 		// Print out form.
 		$form = new Form ($this->form);
