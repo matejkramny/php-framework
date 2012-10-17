@@ -1,13 +1,21 @@
 --TODO List--
 
-- Remove templating rubbish, allow templates to use PHP variables
-- Fix Module loading mechanism
-- Remove modules from database. Check if folder exists and that json settings match the string
-- Module loaded by another module - submodule
-- Simple template..
-- Leave checking for browser and compatibility to the template
-- Finish forms, make them reusable by the template class
-- Remove languages from database.. Check for existing files instead
-- Write driver for MySQLi, MySQL, postgre etc
-- Simplify usage of Databases
-- Make install.php
+- Template- Remove templating rubbish, allow templates to use PHP variables
+- Module-   Fix Module loading mechanism
+- Module-   Check if folder exists and that json settings match the string
+- Module-   submodule
+- Template- A Simple template..
+- Template- Leave checking for browser and compatibility to the template
+- Template- Finish forms, make them reusable by the template class
+- Language- Check for existing files instead
+- Database- Rewrite database interface (MySQLi, MySQL, postgre etc)
+- Install-  Make install.php
+- Add license
+- Add license header to all files
+- Add a tools static class
+
+DONE
+- Remove modules from db
+- Remove templates from db
+- Remove languages from db
+
