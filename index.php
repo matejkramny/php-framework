@@ -13,8 +13,9 @@ set_include_path(fw_root);
 require_once("headers.php");
 
 // Translate function shortcut
-function _t ($key)
-    return $GLOBALS['fw_langs']->translate ($key);
+function _t ($key) {
+	return $GLOBALS['fw_langs']->translate ($key);
+}
 
 // Current user - if null no user and not logged in
 $user = $GLOBALS['fw_security']->authenticatedUser;
